@@ -8,8 +8,9 @@ class AgentCommunication:
     CommunicationFlag = False
     CommunicationError = False
 
-    userAgentUserID = "test@user.com"
-    userAgentPassword = "test"
+    userAgentUserID = "jarvis01@jabbim.com"
+    userAgentPassword = "Agentbased10"
+
 
     UserDataCommandID = "1"
     ReportDataCommandID = "2"

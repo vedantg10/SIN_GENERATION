@@ -2,19 +2,25 @@ import tkinter as tk
 import tkinter.messagebox
 # from PIL import ImageTk, Image
 
-from GUI import loginPage
-import application
+#from application import application
 
 
 
 loginPageFrame = tk.Frame
+
+class ab:
+    def __init__(self, val):
+        self.val = val
+
+    def getVal(self):
+        return self.val * 2
 
 class loginPage(loginPageFrame):
 
     #Callbacks Here
     def Button1_Callback(self, controller):
         print('LoginPage Button 1 Pressed')
-        #controller.show_frame(TestPage1.PageOne)
+        controller.show_frame(loginPage)
 
     def Button2_Callback(self, controller):
         print('LoginPage Button 2 Pressed')
@@ -24,33 +30,34 @@ class loginPage(loginPageFrame):
         print('LoginPage Button 3 Pressed')
         self.UpdateEntryData()
         #Validation Checks
-        if((not application.userName) or (not application.password)):
-            tkinter.messagebox.showerror(title="Error", message="Enter Username or Password")
-        else:
-            #Check Username in Database if matches
-            if((application.userName == application.User3_Username) and (application.Password == application.User3_Password)):
-                # Curr_Frame = UserPage.UserPage
-                print("UserPage Initialized")
-                controller.show_frame(Curr_Frame)
-            elif((application.Username == application.User2_Username) and (application.Password == application.User2_Password)):
-                # Curr_Frame = AHSAdminPage.AHSAdminPage
-                print("AHSAdminPage Initialized")
-                controller.show_frame(Curr_Frame)
-            elif ((application.Username == application.User1_Username) and (application.Password == application.User1_Password)):
-                # Curr_Frame = AdminPage.AdminPage
-                print("AdminPage Initialized")
-                controller.show_frame(Curr_Frame)
-            else:
-                tkinter.messagebox.showerror(title="Error", message="Wrong Username or Password")
+    #     if((not application.userName) or (not application.password)):
+    #         tkinter.messagebox.showerror(title="Error", message="Enter Username or Password")
+    #     else:
+    #         #Check Username in Database if matches
+    #         if((application.userName == application.User3_Username) and (application.Password == application.User3_Password)):
+    #             # Curr_Frame = UserPage.UserPage
+    #             print("UserPage Initialized")
+    #             #controller.show_frame(Curr_Frame)
+    #         elif((application.Username == application.User2_Username) and (application.Password == application.User2_Password)):
+    #             # Curr_Frame = AHSAdminPage.AHSAdminPage
+    #             print("AHSAdminPage Initialized")
+    #             #controller.show_frame(Curr_Frame)
+    #         elif ((application.Username == application.User1_Username) and (application.Password == application.User1_Password)):
+    #             # Curr_Frame = AdminPage.AdminPage
+    #             print("AdminPage Initialized")
+    #             #controller.show_frame(Curr_Frame)
+    #         else:
+    #             tkinter.messagebox.showerror(title="Error", message="Wrong Username or Password")
 
-    def UpdateEntryData(self):
-        application.userName = self.Entry1.get()
-        application.password = self.Entry2.get()
-        print("Username: " + application.userName)
-        print("Password: " + application.password)
+    # def UpdateEntryData(self):
+    #     application.userName = self.Entry1.get()
+    #     application.password = self.Entry2.get()
+    #     print("Username: " + application.userName)
+    #     print("Password: " + application.password)
 
 
     def __init__(self, parent, controller):
+        print("Login component called")
         tk.Frame.__init__(self, parent)
 
         #Adding Image to frame

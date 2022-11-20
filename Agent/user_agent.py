@@ -14,8 +14,8 @@ class AgentCommunication:
     CommunicationFlag = False
     CommunicationError = False
 
-    userAgentUserID = "test@user.com"
-    userAgentPassword = "test"
+    userAgentUserID = "jarvis01@jabbim.com"
+    userAgentPassword = "Agentbased10"
 
     # Agent IDs
     userAgentID = "1"
@@ -110,5 +110,5 @@ def userAgentStart():
     userAgent = UserAgentClass(AgentCommunication.userAgentUserID, AgentCommunication.userAgentPassword)
     print (userAgent)
     # wait for receiver agent to be prepared.
-    userAgent.start().result()
+    userAgent.start()
     userAgent.web.start(hostname="127.0.0.1", port="10000")
