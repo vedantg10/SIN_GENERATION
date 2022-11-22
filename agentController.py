@@ -10,8 +10,8 @@ class AgentCommunication:
 
     userAgentUserID = "agent1@jabbim.com"
     userAgentPassword = "agent@123"
-    jwtAgentUserId = "agent1@jabbim.com"
-    jwtAgentPasswordId = "agent@123"
+    jwtAgentUserId = "agent2@jabbim.com"
+    jwtAgentPassword = "agent@123"
 
     UserDataCommandID = "1"
     ReportDataCommandID = "2"

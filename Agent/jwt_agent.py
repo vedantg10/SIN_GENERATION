@@ -14,7 +14,7 @@ class JwtAgentClass(Agent):
             print("Class:{\"JwtAgentClass.JwtAgentBehaviour\"}, Method:{\"on_start\"}")
 
         async def run(self):
-            print("JwtAgent:JwtAgentBehaviour:run")
+            # print("JwtAgent:JwtAgentBehaviour:run")
 
             msg = await self.receive(timeout=10) # wait for a message for 10 seconds
             if msg:
@@ -61,14 +61,14 @@ class JwtAgentClass(Agent):
 
 
     async def setup(self):
-        print("JwtAgentClass:setup")
+        # print("JwtAgentClass:setup")
         b = self.JwtAgentBehaviour()
         template = Template()
         template.set_metadata("performative", "inform")
         self.add_behaviour(b, template)
 
 def JwtAgentStart():
-    jwtAgent = JwtAgentClass(AgentCommunication.jwtAgentUserId, AgentCommunication.jwtAgentPasswordId)
+    jwtAgent = JwtAgentClass(AgentCommunication.jwtAgentUserId, AgentCommunication.jwtAgentPassword)
     # wait for receiver agent to be prepared.
     jwtAgent.start().result()
     jwtAgent.web.start(hostname="127.0.0.4", port="10000")
