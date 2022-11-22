@@ -112,5 +112,5 @@ def userAgentStart():
     print (AgentCommunication.userAgentUserID, AgentCommunication.userAgentPassword)
     userAgent = UserAgentClass(AgentCommunication.userAgentUserID, AgentCommunication.userAgentPassword)
     # wait for receiver agent to be prepared.
-    userAgent.start().result()
+    userAgent.start()
     userAgent.web.start(hostname="127.0.0.1", port="10000")

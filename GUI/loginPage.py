@@ -3,7 +3,6 @@ import tkinter.messagebox
 
 # from PIL import ImageTk, Image
 
-
 from GUI import loginPage
 
 import application
@@ -13,12 +12,19 @@ import application
 
 loginPageFrame = tk.Frame
 
+class ab:
+    def __init__(self, val):
+        self.val = val
+
+    def getVal(self):
+        return self.val * 2
+
 class loginPage(loginPageFrame):
 
     #Callbacks Here
     def Button1_Callback(self, controller):
         print('LoginPage Button 1 Pressed')
-        #controller.show_frame(TestPage1.PageOne)
+        controller.show_frame(loginPage)
 
     def Button2_Callback(self, controller):
         print('LoginPage Button 2 Pressed')
@@ -55,6 +61,7 @@ class loginPage(loginPageFrame):
 
 
     def __init__(self, parent, controller):
+        print("Login component called")
         tk.Frame.__init__(self, parent)
 
         #Adding Image to frame

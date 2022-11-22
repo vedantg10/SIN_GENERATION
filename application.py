@@ -6,12 +6,14 @@ from agentController import ApplicationData
 from Agent import user_agent
 
 
+
+
 #import pages
 from GUI.loginPage import loginPage
 
-
 #loginDATA
 Curr_Frame = loginPage
+
 userName = "test@user.com"
 password = "test"
 
@@ -31,6 +33,7 @@ class application(tk.Tk):
     def __init__(self, *args, **Kwargs):
         tk.Tk.__init__(self, *args, **Kwargs)
         tk.Tk.wm_title(self, "BTC")
+        
         self.geometry("1536x801+-8+-8")
         self.minsize(120, 1)
         self.maxsize(3844, 1071)
