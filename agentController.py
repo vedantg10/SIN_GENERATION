@@ -40,6 +40,16 @@ class AgentCommunication:
     # index reserved for :
     DataIndex = 5
 
+class JWT:
+    #jwt salt
+    salt = "someSaltValue"
+    
+    #jwt secret
+    secret = "someSecretValue"
+
+class DatabaseAgentData:
+    encoded_jwt = ""
+
 from Agent import jwt_agent
 def StartAgents():
     jwt_agent.JwtAgentStart()

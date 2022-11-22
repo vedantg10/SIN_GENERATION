@@ -12,18 +12,18 @@ import jwt
 # from ReportGeneration import ReportGeneration
 
 
-class JwtAgentClass(Agent):
-    class JwtAgentBehaviour(CyclicBehaviour):
+class VerificationAgentClass(Agent):
+    class VerificationAgentBehaviour(CyclicBehaviour):
         async def on_start(self):
-            print("Class:{\"JwtAgentClass.JwtAgentBehaviour\"}, Method:{\"on_start\"}")
+            print("Class:{\"VerificationAgentClass.VerificationAgentBehaviour\"}, Method:{\"on_start\"}")
 
         async def run(self):
-            print("JwtAgent:JwtAgentBehaviour:run")
+            print("VerificationAgent:VerificationAgentBehaviour:run")
 
             msg = await self.receive(timeout=10) # wait for a message for 10 seconds
             if msg:
                 ReceivedMessage = msg.body
-                print ("i am message from jwt", ReceivedMessage)
+                print ("i am message from verification agent", ReceivedMessage)
 
                 ''' Check Agent Receiver ID'''
                 if not ReceivedMessage[1] == AgentCommunication.UserAgentID:
@@ -83,7 +83,7 @@ class JwtAgentClass(Agent):
         self.add_behaviour(b, template)
 
 def JwtAgentStart():
-    jwtAgent = JwtAgentClass(AgentCommunication.jwtAgentUserId, AgentCommunication.jwtAgentPasswordId)
+    jwtAgent = VerificationAgentClass(AgentCommunication.jwtAgentUserId, AgentCommunication.jwtAgentPasswordId)
     # wait for receiver agent to be prepared.
     jwtAgent.start().result()
     jwtAgent.web.start(hostname="127.0.0.4", port="10000")
