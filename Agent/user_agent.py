@@ -14,15 +14,15 @@ class AgentCommunication:
     CommunicationFlag = False
     CommunicationError = False
 
-    userAgentUserID = "test@user.com"
-    userAgentPassword = "test"
+    userAgentUserID = "agent1@jabbim.com"
+    userAgentPassword = "agent@123"
+    jwtAgentUserId = "agent1@jabbim.com"
+    jwtAgentPasswordId = "agent@123"
 
     # Agent IDs
     userAgentID = "1"
-    systemDatabaseAgentID = "4"
-    authorizationAgentID = "2"
-    verificationAgentID = "3"
-    sinGeneratorAgentID = "5"
+    jwtAgentID = "2"
+    systemDatabaseAgentID = "3"
 
 
     # Error Codes
@@ -51,10 +51,13 @@ class UserAgentClass(Agent):
             print("Class:{\"UserAgentClass.UserAgentBehaviour\"}, Method:{\"on_start\"}")
 
         async def run(self):
-            #print("SenderAgent:UserAgentBehaviour:run")
+            # print("SenderAgent:UserAgentBehaviour:run")
             if AgentCommunication.CommunicationFlag:
+                print (AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex])
                 if AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.userAgentID:
                     msg = Message(to=AgentCommunication.userAgentUserID)  # Instantiate the message
+                elif AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.jwtAgentID:
+                    msg = Message(to=AgentCommunication.jwtAgentUserId)
 
                 # Set the "inform" FIPA performative
                 msg.set_metadata("performative", "inform")
@@ -72,7 +75,7 @@ class UserAgentClass(Agent):
                 if msg:
                     # Copy Received to Communication RX Buffer
                     AgentCommunication.CommunicationRxBuffer = msg.body
-                    print("WebPortalAgentClass:WebPortalAgentBehaviour:run:msg:response:\"{}\"".format(msg.body))
+                    print("UserAgentClass:UserAgentBehaviour:run:msg:response:\"{}\"".format(msg.body))
                     AgentCommunication.CommunicationError = False
                     AgentCommunication.CommunicationFlag = False
 
@@ -91,6 +94,7 @@ class UserAgentClass(Agent):
         self.add_behaviour(b)
 
 def RequestData(SenderAgentID, ReceiverAgentID, CommandID, ErrorCode, Data):
+    print("fghjkl;")
 
     AgentCommunication.CommunicationTxBuffer = SenderAgentID + ReceiverAgentID + CommandID + ErrorCode + Data
     AgentCommunication.CommunicationFlag = True
@@ -104,11 +108,9 @@ def RequestData(SenderAgentID, ReceiverAgentID, CommandID, ErrorCode, Data):
     return AgentCommunication.CommunicationRxBuffer
 
 def userAgentStart():
-    print ('user agent main start fn')
     AgentCommunication.CommunicationTxBuffer = "Deep"
     print (AgentCommunication.userAgentUserID, AgentCommunication.userAgentPassword)
     userAgent = UserAgentClass(AgentCommunication.userAgentUserID, AgentCommunication.userAgentPassword)
-    print (userAgent)
     # wait for receiver agent to be prepared.
-    userAgent.start().result()
+    userAgent.start()
     userAgent.web.start(hostname="127.0.0.1", port="10000")
