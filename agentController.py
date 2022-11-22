@@ -8,9 +8,10 @@ class AgentCommunication:
     CommunicationFlag = False
     CommunicationError = False
 
-    userAgentUserID = "jarvis01@jabbim.com"
-    userAgentPassword = "Agentbased10"
-
+    userAgentUserID = "agent1@jabbim.com"
+    userAgentPassword = "agent@123"
+    jwtAgentUserId = "agent1@jabbim.com"
+    jwtAgentPasswordId = "agent@123"
 
     UserDataCommandID = "1"
     ReportDataCommandID = "2"
@@ -20,7 +21,8 @@ class AgentCommunication:
 
      # Agent IDs
     userAgentID = "1"
-    SystemDatabaseAgentID = "2"
+    jwtAgentID = "2"
+    SystemDatabaseAgentID = "3"
 
     # Error Codes
     SuccessAckID = "0"
@@ -37,3 +39,7 @@ class AgentCommunication:
     ErrorCodeIndex = 3
     # index reserved for :
     DataIndex = 5
+
+from Agent import jwt_agent
+def StartAgents():
+    jwt_agent.JwtAgentStart()

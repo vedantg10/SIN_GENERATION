@@ -1,6 +1,6 @@
 import tkinter as tk
 from pymongo import MongoClient
-# import AgentController
+import agentController
 from agentController import AgentCommunication
 from agentController import ApplicationData
 from Agent import user_agent
@@ -10,13 +10,12 @@ from Agent import user_agent
 
 #import pages
 from GUI.loginPage import loginPage
-print(type(loginPage))
-
 
 #loginDATA
 Curr_Frame = loginPage
-#userName = "test@user.com"
-#password = "test"
+
+userName = "test@user.com"
+password = "test"
 
 
 def connectDatabase():
@@ -34,7 +33,7 @@ class application(tk.Tk):
     def __init__(self, *args, **Kwargs):
         tk.Tk.__init__(self, *args, **Kwargs)
         tk.Tk.wm_title(self, "BTC")
-
+        
         self.geometry("1536x801+-8+-8")
         self.minsize(120, 1)
         self.maxsize(3844, 1071)
@@ -50,9 +49,10 @@ class application(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
         self.frames = {}
         for F in (loginPage, loginPage):
-             frame = F(container, self)
-             self.frames[F] = frame
-             frame.grid(row=0, column=0, sticky="nsew")
+            print(F)
+            frame = F(container, self)
+            self.frames[F] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
         Curr_Frame = loginPage
         self.show_frame(Curr_Frame)
 
@@ -62,7 +62,7 @@ class application(tk.Tk):
 
 if __name__ =='__main__':
     print ('hi')
-    print()
+    agentController.StartAgents()
     user_agent.userAgentStart()
     app = application()
     app.mainloop()
