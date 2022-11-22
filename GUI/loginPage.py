@@ -1,9 +1,13 @@
 import tkinter as tk
 import tkinter.messagebox
+
 # from PIL import ImageTk, Image
 
+
 from GUI import loginPage
+
 import application
+
 
 
 
@@ -20,34 +24,34 @@ class loginPage(loginPageFrame):
         print('LoginPage Button 2 Pressed')
         # controller.show_frame(TestPage1.PageOne)
 
-    def Button3_Callback(self, controller):
-        print('LoginPage Button 3 Pressed')
-        self.UpdateEntryData()
-        #Validation Checks
-        if((not application.userName) or (not application.password)):
-            tkinter.messagebox.showerror(title="Error", message="Enter Username or Password")
-        else:
-            #Check Username in Database if matches
-            if((application.userName == application.User3_Username) and (application.Password == application.User3_Password)):
-                # Curr_Frame = UserPage.UserPage
-                print("UserPage Initialized")
-                controller.show_frame(Curr_Frame)
-            elif((application.Username == application.User2_Username) and (application.Password == application.User2_Password)):
-                # Curr_Frame = AHSAdminPage.AHSAdminPage
-                print("AHSAdminPage Initialized")
-                controller.show_frame(Curr_Frame)
-            elif ((application.Username == application.User1_Username) and (application.Password == application.User1_Password)):
-                # Curr_Frame = AdminPage.AdminPage
-                print("AdminPage Initialized")
-                controller.show_frame(Curr_Frame)
-            else:
-                tkinter.messagebox.showerror(title="Error", message="Wrong Username or Password")
+    # def Button3_Callback(self, controller):
+    #     print('LoginPage Button 3 Pressed')
+    #     self.UpdateEntryData()
+    #     #Validation Checks
+    #     if((not application.userName) or (not application.password)):
+    #         tkinter.messagebox.showerror(title="Error", message="Enter Username or Password")
+    #     else:
+    #         #Check Username in Database if matches
+    #         if((application.userName == application.User3_Username) and (application.Password == application.User3_Password)):
+    #             # Curr_Frame = UserPage.UserPage
+    #             print("UserPage Initialized")
+    #             controller.show_frame(Curr_Frame)
+    #         elif((application.Username == application.User2_Username) and (application.Password == application.User2_Password)):
+    #             # Curr_Frame = AHSAdminPage.AHSAdminPage
+    #             print("AHSAdminPage Initialized")
+    #             controller.show_frame(Curr_Frame)
+    #         elif ((application.Username == application.User1_Username) and (application.Password == application.User1_Password)):
+    #             # Curr_Frame = AdminPage.AdminPage
+    #             print("AdminPage Initialized")
+    #             controller.show_frame(Curr_Frame)
+    #         else:
+    #             tkinter.messagebox.showerror(title="Error", message="Wrong Username or Password")
 
-    def UpdateEntryData(self):
-        application.userName = self.Entry1.get()
-        application.password = self.Entry2.get()
-        print("Username: " + application.userName)
-        print("Password: " + application.password)
+    # def UpdateEntryData(self):
+    #     application.userName = self.Entry1.get()
+    #     application.password = self.Entry2.get()
+    #     print("Username: " + application.userName)
+    #     print("Password: " + application.password)
 
 
     def __init__(self, parent, controller):
@@ -125,7 +129,7 @@ class loginPage(loginPageFrame):
         self.Button3.place(relx=0.461, rely=0.628, height=64, width=207)
         self.Button3.configure(background="#1eee52")
         self.Button3.configure(borderwidth="3")
-        self.Button3.configure(command=lambda: loginPage.Button3_Callback(self, controller))
+        # self.Button3.configure(command=lambda: loginPage.Button3_Callback(self, controller))
         self.Button3.configure(cursor="hand2")
         self.Button3.configure(font="-family {Segoe UI} -size 23 -weight bold")
         self.Button3.configure(highlightcolor="black")
