@@ -16,13 +16,16 @@ class AgentCommunication:
 
     userAgentUserID = "agent1@jabbim.com"
     userAgentPassword = "agent@123"
-    jwtAgentUserId = "agent1@jabbim.com"
+    jwtAgentUserId = "agent2@jabbim.com"
     jwtAgentPasswordId = "agent@123"
 
     # Agent IDs
     userAgentID = "1"
     jwtAgentID = "2"
     systemDatabaseAgentID = "3"
+
+    #Command IDs
+    UserDataCommandId = "1"
 
 
     # Error Codes
@@ -57,6 +60,7 @@ class UserAgentClass(Agent):
                 if AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.userAgentID:
                     msg = Message(to=AgentCommunication.userAgentUserID)  # Instantiate the message
                 elif AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.jwtAgentID:
+                    print ("sending messaaage")
                     msg = Message(to=AgentCommunication.jwtAgentUserId)
 
                 # Set the "inform" FIPA performative
@@ -109,7 +113,6 @@ def RequestData(SenderAgentID, ReceiverAgentID, CommandID, ErrorCode, Data):
 
 def userAgentStart():
     AgentCommunication.CommunicationTxBuffer = "Deep"
-    print (AgentCommunication.userAgentUserID, AgentCommunication.userAgentPassword)
     userAgent = UserAgentClass(AgentCommunication.userAgentUserID, AgentCommunication.userAgentPassword)
     # wait for receiver agent to be prepared.
     userAgent.start()
