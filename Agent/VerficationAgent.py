@@ -12,18 +12,18 @@ import jwt
 # from ReportGeneration import ReportGeneration
 
 
-class JwtAgentClass(Agent):
-    class JwtAgentBehaviour(CyclicBehaviour):
+class VerificationAgentClass(Agent):
+    class VerificationAgentBehaviour(CyclicBehaviour):
         async def on_start(self):
-            print("Class:{\"JwtAgentClass.JwtAgentBehaviour\"}, Method:{\"on_start\"}")
+            print("Class:{\"VerificationAgentClass.VerificationAgentBehaviour\"}, Method:{\"on_start\"}")
 
         async def run(self):
-            # print("JwtAgent:JwtAgentBehaviour:run")
+            print("VerificationAgent:VerificationAgentBehaviour:run")
 
             msg = await self.receive(timeout=10) # wait for a message for 10 seconds
             if msg:
                 ReceivedMessage = msg.body
-                print ("i am message from jwt", ReceivedMessage)
+                print ("i am message from verification agent", ReceivedMessage)
 
                 ''' Check Agent Receiver ID'''
                 if not ReceivedMessage[1] == AgentCommunication.UserAgentID:
@@ -37,19 +37,17 @@ class JwtAgentClass(Agent):
                 if commandID == AgentCommunication.GenerateReportCommandID:
                     'Get Data from Message body'
                     ApplicationData.email = ReceivedMessage[1]
-                    ApplicationData.password = ReceivedMessage[2]
 
-                    #secret logic for jwt token
-                    #appending salt with password to change the password
-                    ApplicationData.password = JWT.salt + ApplicationData.password
+                    #Get data for the user from the cloud database
+                    sinData = ""
 
-                    payload = {
-                        'email': ApplicationData.email,
-                        'password': ApplicationData.password
-                    }
 
-                    encoded_jwt = jwt.encode(payload, JWT.secret, algorithm="HS256")
-                    print(encoded_jwt)
+                    #Logic to check if SIN data exists for the user or not
+                    if(sinData == "" and len(sinData) <= 9):
+                        return True
+                    else:
+                        print("SIN exists for the user")
+                        return False
 
                     #Database agent call to get JWT for the user
                     if(DatabaseAgentData.encoded_jwt == encoded_jwt):
@@ -76,14 +74,14 @@ class JwtAgentClass(Agent):
 
 
     async def setup(self):
-        # print("JwtAgentClass:setup")
+        print("VerficationAgent:setup")
         b = self.JwtAgentBehaviour()
         template = Template()
         template.set_metadata("performative", "inform")
         self.add_behaviour(b, template)
 
 def JwtAgentStart():
-    jwtAgent = JwtAgentClass(AgentCommunication.jwtAgentUserId, AgentCommunication.jwtAgentPassword)
+    jwtAgent = VerificationAgentClass(AgentCommunication.jwtAgentUserId, AgentCommunication.jwtAgentPasswordId)
     # wait for receiver agent to be prepared.
     jwtAgent.start().result()
-    jwtAgent.web.start(hostname="127.0.0.4", port="10000")
+    jwtAgent.web.start(hostname="127.0.0.5", port="10000")

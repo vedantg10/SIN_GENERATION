@@ -11,7 +11,9 @@ class AgentCommunication:
     userAgentUserID = "agent1@jabbim.com"
     userAgentPassword = "agent@123"
     jwtAgentUserId = "agent2@jabbim.com"
-    jwtAgentPassword = "agent@123"
+    jwtAgentPasswordId = "agent@123"
+    verificationAgentId = "agent3@jabbim.com"
+    verificationAgentPasswordId = "agent@123"
 
     UserDataCommandID = "1"
     ReportDataCommandID = "2"
@@ -39,6 +41,16 @@ class AgentCommunication:
     ErrorCodeIndex = 3
     # index reserved for :
     DataIndex = 5
+
+class JWT:
+    #jwt salt
+    salt = "someSaltValue"
+    
+    #jwt secret
+    secret = "someSecretValue"
+
+class DatabaseAgentData:
+    encoded_jwt = ""
 
 from Agent import jwt_agent
 def StartAgents():
