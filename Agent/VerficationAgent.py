@@ -75,13 +75,13 @@ class VerificationAgentClass(Agent):
 
     async def setup(self):
         print("VerficationAgent:setup")
-        b = self.JwtAgentBehaviour()
+        b = self.VerificationAgentBehaviour()
         template = Template()
         template.set_metadata("performative", "inform")
         self.add_behaviour(b, template)
 
 def JwtAgentStart():
-    jwtAgent = VerificationAgentClass(AgentCommunication.jwtAgentUserId, AgentCommunication.jwtAgentPasswordId)
+    jwtAgent = VerificationAgentClass(AgentCommunication.verificationAgentUserId, AgentCommunication.verificationAgentPasswordId)
     # wait for receiver agent to be prepared.
     jwtAgent.start().result()
     jwtAgent.web.start(hostname="127.0.0.5", port="10000")

@@ -7,6 +7,8 @@ from agentController import ApplicationData
 from agentController import JWT
 from agentController import DatabaseAgentData
 
+import random
+
 import jwt
 # from ReportGeneration.Encoder_Decoder import encode_file_to_str
 # from ReportGeneration import ReportGeneration
@@ -37,23 +39,15 @@ class SinGeneratorAgentClass(Agent):
                 if commandID == AgentCommunication.GenerateReportCommandID:
                     'Get Data from Message body'
                     ApplicationData.email = ReceivedMessage[1]
+                    ApplicationData.passport = ReceivedMessage[2]
 
-                    #Get data for the user from the cloud database
-                    sinData = ""
+                    
 
+                    generatedSIN = random.randrange(100000000, 999999999)
 
-                    #Logic to check if SIN data exists for the user or not
-                    if(sinData == "" and len(sinData) <= 9):
-                        return True
-                    else:
-                        print("SIN exists for the user")
-                        return False
+                    print(generatedSIN)
 
-                    #Database agent call to get JWT for the user
-                    if(DatabaseAgentData.encoded_jwt == encoded_jwt):
-                        return True
-                    else:
-                        return False
+                    #Database call to save genearted SIN against the user
 
                     # ReportGeneration.GenerateReport(ApplicationData.Name, ApplicationData.HCNo, ApplicationData.DOB,
                     #                                 ApplicationData.Dose1Type, ApplicationData.Dose1Date, ApplicationData.Dose1Address,
@@ -75,13 +69,13 @@ class SinGeneratorAgentClass(Agent):
 
     async def setup(self):
         print("SinGeneratorAgent:setup")
-        b = self.JwtAgentBehaviour()
+        b = self.SinGeneratorBehaviour()
         template = Template()
         template.set_metadata("performative", "inform")
         self.add_behaviour(b, template)
 
 def JwtAgentStart():
-    jwtAgent = SinGeneratorAgentClass(AgentCommunication.jwtAgentUserId, AgentCommunication.jwtAgentPasswordId)
+    jwtAgent = SinGeneratorAgentClass(AgentCommunication.sinGeneratorAgentUserId, AgentCommunication.sinGeneratorAgentPasswordId)
     # wait for receiver agent to be prepared.
     jwtAgent.start().result()
     jwtAgent.web.start(hostname="127.0.0.6", port="10000")

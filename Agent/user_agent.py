@@ -18,12 +18,19 @@ class AgentCommunication:
     userAgentPassword = "agent@123"
     jwtAgentUserId = "agent2@jabbim.com"
     jwtAgentPasswordId = "agent@123"
+    verificationAgentUserId = "agent3@jabbim.com"
+    verificationAgentPasswordId = "agent@123"
+    sinGeneratorAgentUserId = "agent4@jabbim.com"
+    sinGeneratorAgentPasswordId = "agent@123"
+    databaseAgentUserId = "agent5@jabbim.com"
+    databaseAgentPasswordId = "agent@123"
 
     # Agent IDs
     userAgentId = "1"
     jwtAgentId = "2"
-    systemDatabaseAgentId = "3"
+    verificationAgentId = "3"
     sinGenerationID = "4"
+    databaseAgentId = "5"
 
     #Command IDs
     UserDataCommandId = "1"
@@ -61,8 +68,17 @@ class UserAgentClass(Agent):
                 if AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.userAgentID:
                     msg = Message(to=AgentCommunication.userAgentUserID)  # Instantiate the message
                 elif AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.jwtAgentID:
-                    print ("sending messaaage")
+                    print ("sending message to JWT Agent Id")
                     msg = Message(to=AgentCommunication.jwtAgentUserId)
+                elif AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.verificationAgentId:
+                    print ("sending message to Verification Agent Id")
+                    msg = Message(to=AgentCommunication.verificationAgentUserId)
+                elif AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.databaseAgentId:
+                    print ("sending message to Database Agent Id")
+                    msg = Message(to=AgentCommunication.databaseAgentUserId)
+                elif AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.sinGenerationID:
+                    print ("sending message to Sin Generator Agent Id")
+                    msg = Message(to=AgentCommunication.sinGeneratorAgentUserId)
 
                 # Set the "inform" FIPA performative
                 msg.set_metadata("performative", "inform")
@@ -113,7 +129,7 @@ def RequestData(SenderAgentID, ReceiverAgentID, CommandID, ErrorCode, Data):
     return AgentCommunication.CommunicationRxBuffer
 
 def userAgentStart():
-    AgentCommunication.CommunicationTxBuffer = "Deep"
+    AgentCommunication.CommunicationTxBuffer = "Sin generator service"
     userAgent = UserAgentClass(AgentCommunication.userAgentUserID, AgentCommunication.userAgentPassword)
     # wait for receiver agent to be prepared.
     userAgent.start()
