@@ -50,6 +50,18 @@ class loginPage(loginPageFrame):
             #     # Curr_Frame = AdminPage.AdminPage
             #     print("AdminPage Initialized")
             #     # controller.show_frame(Curr_Frame)
+
+
+            #Call here to verification agent to check data
+
+
+            #Database agent used to create a new account
+            
+
+            #sin agent call to create a sin number
+
+
+            #Recieved sin number used to save data against the user in the dastabase
             else:
                 tkinter.messagebox.showerror(title="Error", message="Wrong Username or Password")
 

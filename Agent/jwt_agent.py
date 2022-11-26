@@ -4,6 +4,9 @@ from spade.message import Message
 from spade.template import Template
 from agentController import AgentCommunication
 from agentController import ApplicationData
+from agentController import DatabaseAgentData
+import jwt
+from agentController import JWT
 # from ReportGeneration.Encoder_Decoder import encode_file_to_str
 # from ReportGeneration import ReportGeneration
 
@@ -32,31 +35,28 @@ class JwtAgentClass(Agent):
 
                 if commandID == AgentCommunication.GenerateReportCommandID:
                     'Get Data from Message body'
-                    ApplicationData.Name = ReceivedMessage[1]
-                    ApplicationData.HCNo = ReceivedMessage[2]
-                    ApplicationData.DOB = ReceivedMessage[3]
-                    ApplicationData.Dose1Type = ReceivedMessage[4]
-                    ApplicationData.Dose1Date = ReceivedMessage[5]
-                    ApplicationData.Dose1Address = ReceivedMessage[6]
-                    ApplicationData.Dose2Type = ReceivedMessage[7]
-                    ApplicationData.Dose2Date = ReceivedMessage[8]
-                    ApplicationData.Dose2Address = ReceivedMessage[9]
+                    ApplicationData.email = ReceivedMessage[1]
+                    ApplicationData.password = ReceivedMessage[2]
 
-                    # ReportGeneration.GenerateReport(ApplicationData.Name, ApplicationData.HCNo, ApplicationData.DOB,
-                    #                                 ApplicationData.Dose1Type, ApplicationData.Dose1Date, ApplicationData.Dose1Address,
-                    #                                 ApplicationData.Dose2Type, ApplicationData.Dose2Date, ApplicationData.Dose2Address)
-                    #
-                    # file_str = encode_file_to_str("CovidReport.pdf")
-                    ErrorCode = AgentCommunication.SuccessAckID
+                    #secret logic for jwt token
+                    #appending salt with password to change the password
+                    ApplicationData.password = JWT.salt + ApplicationData.password
 
-                    # Send response to Webportal agent
-                    msg.body = AgentCommunication.WebPortalAgentID + \
-                               AgentCommunication.UserAgentID + \
-                               commandID + \
-                               ErrorCode + \
-                               ':'
+                    payload = {
+                        'email': ApplicationData.email,
+                        'password': ApplicationData.password
+                    }
 
-                print("UserAgentClass:UserAgentBehaviour:run:msg:response:{CovidReport.pdf Sent}")
+                    encoded_jwt = jwt.encode(payload, JWT.secret, algorithm="HS256")
+                    print(encoded_jwt)
+
+                    #Database agent call to get JWT for the user
+                    if(DatabaseAgentData.encoded_jwt == encoded_jwt):
+                        return True
+                    else:
+                        return False
+
+                print("UserAgentClass:UserAgentBehaviour:run:msg:response:{user signed in}")
                 await self.send(msg)
 
 
