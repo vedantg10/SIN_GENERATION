@@ -20,9 +20,10 @@ class AgentCommunication:
     jwtAgentPasswordId = "agent@123"
 
     # Agent IDs
-    userAgentID = "1"
-    jwtAgentID = "2"
-    systemDatabaseAgentID = "3"
+    userAgentId = "1"
+    jwtAgentId = "2"
+    systemDatabaseAgentId = "3"
+    sinGenerationID = "4"
 
 
     # Error Codes

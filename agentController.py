@@ -14,6 +14,8 @@ class AgentCommunication:
     jwtAgentPasswordId = "agent@123"
     verificationAgentId = "agent3@jabbim.com"
     verificationAgentPasswordId = "agent@123"
+    sinGeneratorAgentId = "agent4@jabbim.com"
+    sinGeneratorAgentPasswordId = "agent@123"
 
     UserDataCommandID = "1"
     ReportDataCommandID = "2"
