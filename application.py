@@ -14,9 +14,19 @@ from GUI.loginPage import loginPage
 #loginDATA
 Curr_Frame = loginPage
 
+#AdminCredentials
 userName = "test@user.com"
 password = "test"
 
+#userCredentials
+user1_userName = "test@user.com"
+user1_password = "test"
+
+user2_userName = "test_1@user.com"
+user2_password = "test1"
+
+user3_userName = "test_2@user.com"
+user3_password = "test2"
 
 def connectDatabase():
     try:
@@ -61,7 +71,6 @@ class application(tk.Tk):
         frame.tkraise()
 
 if __name__ =='__main__':
-    print ('hi')
     agentController.StartAgents()
     user_agent.userAgentStart()
     app = application()
