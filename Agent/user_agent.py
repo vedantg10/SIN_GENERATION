@@ -18,14 +18,23 @@ class AgentCommunication:
     userAgentPassword = "agent@123"
     jwtAgentUserId = "agent2@jabbim.com"
     jwtAgentPasswordId = "agent@123"
+    sinGeneratorAgentUserId = "agent3@jabbim.com"
+    sinGeneratorAgentPasswordId = "agent@123"
+    verificationAgentUserId = "agent4@jabbim.com"
+    verificationAgentPasswordId = "agent@123"
+    databaseAgentUserId = "agent5@jabbim.com"
+    databaseAgentPasswordId = "agent@123"
 
     # Agent IDs
     userAgentID = "1"
     jwtAgentID = "2"
-    systemDatabaseAgentID = "3"
+    verificationAgentID = "3"
+    systemDatabaseAgentID = "4"
 
     #Command IDs
     UserDataCommandId = "1"
+    UserCreateJwtCommandId = "2"
+    UserCreateVerificationCommandId = "3"
 
 
     # Error Codes
@@ -56,11 +65,11 @@ class UserAgentClass(Agent):
         async def run(self):
             # print("SenderAgent:UserAgentBehaviour:run")
             if AgentCommunication.CommunicationFlag:
-                print (AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex])
+                print(AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex])
                 if AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.userAgentID:
                     msg = Message(to=AgentCommunication.userAgentUserID)  # Instantiate the message
                 elif AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.jwtAgentID:
-                    print ("sending messaaage")
+                    print("sending messaaage")
                     msg = Message(to=AgentCommunication.jwtAgentUserId)
 
                 # Set the "inform" FIPA performative

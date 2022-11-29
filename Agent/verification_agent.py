@@ -26,7 +26,7 @@ class VerificationAgentClass(Agent):
                 print ("i am message from verification agent", ReceivedMessage)
 
                 ''' Check Agent Receiver ID'''
-                if not ReceivedMessage[1] == AgentCommunication.UserAgentID:
+                if not ReceivedMessage[0] == AgentCommunication.userAgentID:
                     return
 
                 commandID = ReceivedMessage[2]
@@ -34,12 +34,12 @@ class VerificationAgentClass(Agent):
                 msg = Message(to=AgentCommunication.userAgentID)  # Instantiate the message
                 msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
 
-                if commandID == AgentCommunication.GenerateReportCommandID:
+                if commandID == AgentCommunication.UserCreateVerificationCommandId:
                     'Get Data from Message body'
                     ApplicationData.email = ReceivedMessage[1]
 
                     #Get data for the user from the cloud database
-                    sinData = ""
+                    sinData = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdXNlci5jb20iLCJwYXNzd29yZCI6InNvbWVTYWx0VmFsdWV0ZXN0In0.JyFt5w5AdBIH0CabY_b71ThqZsj_SDfG-"
 
 
                     #Logic to check if SIN data exists for the user or not
@@ -49,11 +49,8 @@ class VerificationAgentClass(Agent):
                         print("SIN exists for the user")
                         return False
 
-                    #Database agent call to get JWT for the user
-                    if(DatabaseAgentData.encoded_jwt == encoded_jwt):
-                        return True
-                    else:
-                        return False
+
+
 
                     # ReportGeneration.GenerateReport(ApplicationData.Name, ApplicationData.HCNo, ApplicationData.DOB,
                     #                                 ApplicationData.Dose1Type, ApplicationData.Dose1Date, ApplicationData.Dose1Address,

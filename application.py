@@ -36,7 +36,7 @@ def connectDatabase():
         for data in mycol.find():
             print (data)
     except Exception:
-        print ("FAIELD")
+        print ("FAILED")
 
 
 class application(tk.Tk):

@@ -5,11 +5,10 @@ from spade.template import Template
 from agentController import AgentCommunication
 from agentController import ApplicationData
 from agentController import DatabaseAgentData
-import jwt
 from agentController import JWT
 # from ReportGeneration.Encoder_Decoder import encode_file_to_str
 # from ReportGeneration import ReportGeneration
-
+import jwt
 
 class JwtAgentClass(Agent):
     class JwtAgentBehaviour(CyclicBehaviour):
@@ -22,10 +21,11 @@ class JwtAgentClass(Agent):
             msg = await self.receive(timeout=10) # wait for a message for 10 seconds
             if msg:
                 ReceivedMessage = msg.body
-                print ("i am message from jwt", ReceivedMessage)
+                # print ("i am message from jwt", ReceivedMessage)
+                print(ReceivedMessage[1], ReceivedMessage[2])
 
                 ''' Check Agent Receiver ID'''
-                if not ReceivedMessage[1] == AgentCommunication.UserAgentID:
+                if not ReceivedMessage[0] == AgentCommunication.userAgentID:
                     return
 
                 commandID = ReceivedMessage[2]
@@ -33,7 +33,7 @@ class JwtAgentClass(Agent):
                 msg = Message(to=AgentCommunication.userAgentID)  # Instantiate the message
                 msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
 
-                if commandID == AgentCommunication.GenerateReportCommandID:
+                if commandID == AgentCommunication.UserCreateJwtCommandId:
                     'Get Data from Message body'
                     ApplicationData.email = ReceivedMessage[1]
                     ApplicationData.password = ReceivedMessage[2]
@@ -48,13 +48,21 @@ class JwtAgentClass(Agent):
                     }
 
                     encoded_jwt = jwt.encode(payload, JWT.secret, algorithm="HS256")
+
                     print(encoded_jwt)
 
-                    #Database agent call to get JWT for the user
+
+
+                    # Database agent call to get JWT for the user
                     if(DatabaseAgentData.encoded_jwt == encoded_jwt):
-                        return True
+                        print("userauthenticated")
+                        msg.body = AgentCommunication.userAgentID + \
+                                   AgentCommunication.jwtAgentID + \
+                                   commandID + \
+                                   "ErrorCode" + \
+                                   ':' + encoded_jwt
                     else:
-                        return False
+                        msg.body = "User Not Authenticated"
 
                 print("UserAgentClass:UserAgentBehaviour:run:msg:response:{user signed in}")
                 await self.send(msg)
@@ -71,4 +79,4 @@ def JwtAgentStart():
     jwtAgent = JwtAgentClass(AgentCommunication.jwtAgentUserId, AgentCommunication.jwtAgentPassword)
     # wait for receiver agent to be prepared.
     jwtAgent.start().result()
-    jwtAgent.web.start(hostname="127.0.0.4", port="10000")
+    jwtAgent.web.start(hostname="127.0.0.4", port="10000")   
