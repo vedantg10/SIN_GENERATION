@@ -54,7 +54,8 @@ class loginPage(loginPageFrame):
             # Call here to verification agent to check data
             print(ReceivedData,"vedantjhaattu")
             if(ReceivedData):
-                VerificationData = user_agent.RequestData(AgentCommunication.userAgentID, AgentCommunication.verificationAgentID,
+                if(ReceivedData == "user authenticated"):
+                    VerificationData = user_agent.RequestData(AgentCommunication.userAgentID, AgentCommunication.verificationAgentID,
                                                       AgentCommunication.UserCreateVerificationCommandId
                                                       , AgentCommunication.SuccessAckID, CommData)
             # Database agent used to create a new account

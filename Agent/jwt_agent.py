@@ -30,8 +30,6 @@ class JwtAgentClass(Agent):
 
                 commandID = ReceivedMessage[2]
                 ReceivedMessage = ReceivedMessage.split(":")
-                msg = Message(to=AgentCommunication.userAgentID)  # Instantiate the message
-                msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
 
                 if commandID == AgentCommunication.UserCreateJwtCommandId:
                     'Get Data from Message body'
@@ -47,22 +45,27 @@ class JwtAgentClass(Agent):
                         'password': ApplicationData.password
                     }
 
+
                     encoded_jwt = jwt.encode(payload, JWT.secret, algorithm="HS256")
 
-                    print(encoded_jwt)
+                    # print(encoded_jwt)
 
+                msg = Message(to=AgentCommunication.userAgentUserID)  # Instantiate the message
+                msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
+                ErrorCode = AgentCommunication.SuccessAckID
 
+                # msg.body = AgentCommunication.userAgentID + \
+                #            AgentCommunication.jwtAgentID + \
+                #            commandID + \
+                #            ErrorCode + \
+                #            ':' + encoded_jwt
 
-                    # Database agent call to get JWT for the user
-                    if(DatabaseAgentData.encoded_jwt == encoded_jwt):
-                        print("userauthenticated")
-                        msg.body = AgentCommunication.userAgentID + \
-                                   AgentCommunication.jwtAgentID + \
-                                   commandID + \
-                                   "ErrorCode" + \
-                                   ':' + encoded_jwt
-                    else:
-                        msg.body = "User Not Authenticated"
+    # Database agent call to get JWT for the user
+                if(DatabaseAgentData.encoded_jwt == encoded_jwt):
+                    msg.body = "user authenticated"
+
+                else:
+                    msg.body = "User Not Authenticated"
 
                 print("UserAgentClass:UserAgentBehaviour:run:msg:response:{user signed in}")
                 await self.send(msg)
@@ -79,4 +82,4 @@ def JwtAgentStart():
     jwtAgent = JwtAgentClass(AgentCommunication.jwtAgentUserId, AgentCommunication.jwtAgentPassword)
     # wait for receiver agent to be prepared.
     jwtAgent.start().result()
-    jwtAgent.web.start(hostname="127.0.0.4", port="10000")   
+    jwtAgent.web.start(hostname="127.0.0.4", port="10000")

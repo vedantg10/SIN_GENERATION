@@ -71,6 +71,6 @@ from Agent import database_agent
 
 def StartAgents():
     jwt_agent.JwtAgentStart()
-    sin_agent.SinGeneratorAgentStart()
+    # sin_agent.SinGeneratorAgentStart()
     verification_agent.VerificationAgentStart()
-    database_agent.DatabaseAgentStart()
+    # database_agent.DatabaseAgentStart()

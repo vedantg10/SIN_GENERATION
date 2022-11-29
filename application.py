@@ -5,20 +5,17 @@ from agentController import AgentCommunication
 from agentController import ApplicationData
 from Agent import user_agent
 
-
-
-
-#import pages
+# import pages
 from GUI.loginPage import loginPage
 
-#loginDATA
+# loginDATA
 Curr_Frame = loginPage
 
-#AdminCredentials
+# AdminCredentials
 userName = "test@user.com"
 password = "test"
 
-#userCredentials
+# userCredentials
 user1_userName = "test@user.com"
 user1_password = "test"
 
@@ -28,22 +25,23 @@ user2_password = "test1"
 user3_userName = "test_2@user.com"
 user3_password = "test2"
 
+
 def connectDatabase():
     try:
         myClient = MongoClient("mongodb://localhost:27017/")
         mydb = myClient["SIN_DATABASE"]
         mycol = mydb['userLoginDetails']
         for data in mycol.find():
-            print (data)
+            print(data)
     except Exception:
-        print ("FAILED")
+        print("FAIELD")
 
 
 class application(tk.Tk):
     def __init__(self, *args, **Kwargs):
         tk.Tk.__init__(self, *args, **Kwargs)
         tk.Tk.wm_title(self, "BTC")
-        
+
         self.geometry("1536x801+-8+-8")
         self.minsize(120, 1)
         self.maxsize(3844, 1071)
@@ -70,7 +68,8 @@ class application(tk.Tk):
         frame = self.frames[cont]
         frame.tkraise()
 
-if __name__ =='__main__':
+
+if __name__ == '__main__':
     agentController.StartAgents()
     user_agent.userAgentStart()
     app = application()

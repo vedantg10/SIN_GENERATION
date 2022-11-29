@@ -71,7 +71,9 @@ class UserAgentClass(Agent):
                 elif AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.jwtAgentID:
                     print("sending messaaage")
                     msg = Message(to=AgentCommunication.jwtAgentUserId)
-
+                # elif AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.verificationAgentID:
+                else:
+                    msg = Message(to=AgentCommunication.verificationAgentUserId)
                 # Set the "inform" FIPA performative
                 msg.set_metadata("performative", "inform")
 
@@ -80,10 +82,11 @@ class UserAgentClass(Agent):
 
                   # Send Message
                 await self.send(msg)
-                print("userAgentClass:userAgentBehaviour:run:msg:request:\"{}\"".format(msg.body))
+                print("fghfghguserAgentClass:userAgentBehaviour:run:msg:request:\"{}\"".format(msg.body))
 
                 # wait for a message for 5 seconds
                 msg = await self.receive(timeout=5)
+                print (msg)
 
                 if msg:
                     # Copy Received to Communication RX Buffer

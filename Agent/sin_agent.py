@@ -9,7 +9,9 @@ from agentController import DatabaseAgentData
 
 import random
 
-import jwt
+
+
+
 # from ReportGeneration.Encoder_Decoder import encode_file_to_str
 # from ReportGeneration import ReportGeneration
 
@@ -22,10 +24,10 @@ class SinGeneratorAgentClass(Agent):
         async def run(self):
             print("SinGenerator:SinGeneratorBehaviour:run")
 
-            msg = await self.receive(timeout=10) # wait for a message for 10 seconds
+            msg = await self.receive(timeout=10)  # wait for a message for 10 seconds
             if msg:
                 ReceivedMessage = msg.body
-                print ("i am message from sin generator agent", ReceivedMessage)
+                print("i am message from sin generator agent", ReceivedMessage)
 
                 ''' Check Agent Receiver ID'''
                 if not ReceivedMessage[1] == AgentCommunication.UserAgentID:
@@ -41,13 +43,11 @@ class SinGeneratorAgentClass(Agent):
                     ApplicationData.email = ReceivedMessage[1]
                     ApplicationData.passport = ReceivedMessage[2]
 
-                    
-
                     generatedSIN = random.randrange(100000000, 999999999)
 
                     print(generatedSIN)
 
-                    #Database call to save genearted SIN against the user
+                    # Database call to save generated SIN against the user
 
                     # ReportGeneration.GenerateReport(ApplicationData.Name, ApplicationData.HCNo, ApplicationData.DOB,
                     #                                 ApplicationData.Dose1Type, ApplicationData.Dose1Date, ApplicationData.Dose1Address,
@@ -66,7 +66,6 @@ class SinGeneratorAgentClass(Agent):
                 print("SinGeneratorClass:SinGeneratorBehaviour:run:msg:response:{sin number sent Sent}")
                 await self.send(msg)
 
-
     async def setup(self):
         print("SinGeneratorAgent:setup")
         b = self.SinGeneratorBehaviour()
@@ -74,8 +73,10 @@ class SinGeneratorAgentClass(Agent):
         template.set_metadata("performative", "inform")
         self.add_behaviour(b, template)
 
+
 def SinGeneratorAgentStart():
-    sinAgent = SinGeneratorAgentClass(AgentCommunication.sinGeneratorAgentUserId, AgentCommunication.sinGeneratorAgentPasswordId)
+    sinAgent = SinGeneratorAgentClass(AgentCommunication.sinGeneratorAgentUserId,
+                                      AgentCommunication.sinGeneratorAgentPasswordId)
     # wait for receiver agent to be prepared.
     sinAgent.start().result()
     sinAgent.web.start(hostname="127.0.0.6", port="10000")
