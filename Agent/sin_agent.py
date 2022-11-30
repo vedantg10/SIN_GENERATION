@@ -56,12 +56,8 @@ class SinGeneratorAgentClass(Agent):
                     # file_str = encode_file_to_str("CovidReport.pdf")
                     ErrorCode = AgentCommunication.SuccessAckID
 
-                    # Send response to Webportal agent
-                    msg.body = AgentCommunication.WebPortalAgentID + \
-                               AgentCommunication.UserAgentID + \
-                               commandID + \
-                               ErrorCode + \
-                               ':'
+                    # Sending response to user agent with the generated SIN number
+                    msg.body = "SIN generated"
 
                 print("SinGeneratorClass:SinGeneratorBehaviour:run:msg:response:{sin number sent Sent}")
                 await self.send(msg)
@@ -78,5 +74,5 @@ def SinGeneratorAgentStart():
     sinAgent = SinGeneratorAgentClass(AgentCommunication.sinGeneratorAgentUserId,
                                       AgentCommunication.sinGeneratorAgentPasswordId)
     # wait for receiver agent to be prepared.
-    sinAgent.start().result()
+    sinAgent.start()
     sinAgent.web.start(hostname="127.0.0.6", port="10000")

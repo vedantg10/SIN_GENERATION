@@ -29,13 +29,15 @@ class AgentCommunication:
     userAgentID = "1"
     jwtAgentID = "2"
     verificationAgentID = "3"
-    systemDatabaseAgentID = "4"
+    databaseAgentID = "4"
+    sinAgentId = "5"
 
     #Command IDs
     UserDataCommandId = "1"
     UserCreateJwtCommandId = "2"
     UserCreateVerificationCommandId = "3"
-
+    UserCreateDatabaseCommandId = "4"
+    UserCreateSinCommandId = "5"
 
     # Error Codes
     SuccessAckID = "0"
@@ -69,11 +71,18 @@ class UserAgentClass(Agent):
                 if AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.userAgentID:
                     msg = Message(to=AgentCommunication.userAgentUserID)  # Instantiate the message
                 elif AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.jwtAgentID:
-                    print("sending messaaage")
+                    print("Sending message to jwt agent")
                     msg = Message(to=AgentCommunication.jwtAgentUserId)
-                # elif AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.verificationAgentID:
-                else:
+                elif AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.verificationAgentID:
+                    print("Sending message to Verification agent")
                     msg = Message(to=AgentCommunication.verificationAgentUserId)
+                elif AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.databaseAgentID:
+                    print("Sending message to Database agent")
+                    msg = Message(to=AgentCommunication.databaseAgentUserId)
+                else:
+                    print("Sending message to SIN agent")
+                    msg = Message(to=AgentCommunication.sinGeneratorAgentUserId)
+
                 # Set the "inform" FIPA performative
                 msg.set_metadata("performative", "inform")
 
@@ -127,5 +136,5 @@ def userAgentStart():
     AgentCommunication.CommunicationTxBuffer = "Deep"
     userAgent = UserAgentClass(AgentCommunication.userAgentUserID, AgentCommunication.userAgentPassword)
     # wait for receiver agent to be prepared.
-    userAgent.start().result()
+    userAgent.start()
     userAgent.web.start(hostname="127.0.0.1", port="10000")

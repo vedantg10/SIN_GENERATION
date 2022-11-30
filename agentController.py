@@ -66,11 +66,11 @@ class JWT:
 from Agent import jwt_agent
 from Agent import sin_agent
 from Agent import verification_agent
-from Agent import database_agent
+#from Agent import database_agent
 
 
 def StartAgents():
     jwt_agent.JwtAgentStart()
-    # sin_agent.SinGeneratorAgentStart()
+    sin_agent.SinGeneratorAgentStart()
     verification_agent.VerificationAgentStart()
     # database_agent.DatabaseAgentStart()

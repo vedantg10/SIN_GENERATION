@@ -60,7 +60,7 @@ class JwtAgentClass(Agent):
                 #            ErrorCode + \
                 #            ':' + encoded_jwt
 
-    # Database agent call to get JWT for the user
+                # Database agent call to get JWT for the user
                 if(DatabaseAgentData.encoded_jwt == encoded_jwt):
                     msg.body = "user authenticated"
 
