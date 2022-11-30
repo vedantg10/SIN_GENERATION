@@ -30,7 +30,7 @@ class SinGeneratorAgentClass(Agent):
                 print("i am message from sin generator agent", ReceivedMessage)
 
                 ''' Check Agent Receiver ID'''
-                if not ReceivedMessage[1] == AgentCommunication.UserAgentID:
+                if not ReceivedMessage[0] == AgentCommunication.UserAgentID:
                     return
 
                 commandID = ReceivedMessage[2]

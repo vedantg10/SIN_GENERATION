@@ -133,7 +133,7 @@ def RequestData(SenderAgentID, ReceiverAgentID, CommandID, ErrorCode, Data):
     return AgentCommunication.CommunicationRxBuffer
 
 def userAgentStart():
-    AgentCommunication.CommunicationTxBuffer = "Deep"
+    AgentCommunication.CommunicationTxBuffer = "SIN Generation portal"
     userAgent = UserAgentClass(AgentCommunication.userAgentUserID, AgentCommunication.userAgentPassword)
     # wait for receiver agent to be prepared.
     userAgent.start()
