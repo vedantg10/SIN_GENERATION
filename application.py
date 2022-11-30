@@ -7,6 +7,7 @@ from Agent import user_agent
 
 # import pages
 from GUI.loginPage import loginPage
+#from GUI.userPage import SinPage
 
 # loginDATA
 Curr_Frame = loginPage
