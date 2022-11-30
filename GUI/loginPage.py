@@ -52,17 +52,21 @@ class loginPage(loginPageFrame):
             #     # controller.show_frame(Curr_Frame)
 
             # Call here to verification agent to check data
-            print(ReceivedData,"vedantjhaattu")
+            print(ReceivedData,"Data from jwt_agent")
             if(ReceivedData):
                 if(ReceivedData == "user authenticated"):
                     VerificationData = user_agent.RequestData(AgentCommunication.userAgentID, AgentCommunication.verificationAgentID,
                                                       AgentCommunication.UserCreateVerificationCommandId
                                                       , AgentCommunication.SuccessAckID, CommData)
             # Database agent used to create a new account
+            dataBaseResp = True
 
             # sin agent call to create a sin number
+            if(dataBaseResp):
+                user_agent.RequestData(AgentCommunication.userAgentID, AgentCommunication.sinAgentId,
+                                                      AgentCommunication.UserCreateSinCommandId
+                                                      , AgentCommunication.SuccessAckID, CommData)
 
-            # Recieved sin number used to save data against the user in the dastabase
             else:
                 tkinter.messagebox.showerror(title="Error", message="Wrong Username or Password")
 

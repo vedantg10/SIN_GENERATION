@@ -44,10 +44,9 @@ class VerificationAgentClass(Agent):
 
                     #Logic to check if SIN data exists for the user or not
                     if(sinData == "" and len(sinData) <= 9):
-                        return True
+                        msg.body = "No SIN exists"
                     else:
-                        print("SIN exists for the user")
-                        return False
+                        msg.body = "SIN exists"
 
 
 
@@ -59,14 +58,9 @@ class VerificationAgentClass(Agent):
                     # file_str = encode_file_to_str("CovidReport.pdf")
                     ErrorCode = AgentCommunication.SuccessAckID
 
-                    # Send response to Webportal agent
-                    msg.body = AgentCommunication.WebPortalAgentID + \
-                               AgentCommunication.UserAgentID + \
-                               commandID + \
-                               ErrorCode + \
-                               ':'
-
                 print("UserAgentClass:UserAgentBehaviour:run:msg:response:{message Sent}")
+
+                #send message to user agent
                 await self.send(msg)
 
 
@@ -80,5 +74,5 @@ class VerificationAgentClass(Agent):
 def VerificationAgentStart():
     verificationAgent = VerificationAgentClass(AgentCommunication.verificationAgentUserId, AgentCommunication.verificationAgentPasswordId)
     # wait for receiver agent to be prepared.
-    verificationAgent.start().result()
+    verificationAgent.start()
     verificationAgent.web.start(hostname="127.0.0.5", port="10000")
