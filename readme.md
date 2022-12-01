@@ -12,7 +12,7 @@ There are 5 actors - agents that are required in the project as given below: <br
 # Scope:
 The scope of this project is to create a web application for immigrants and citizens to generate their Social Insurance Number (SIN) online instead of physically going to Service Canada. Any person with valid documents can do the SIN generation process online within Canada.
  
-# Functionalities of individual agents and workflow: <br />
+## Functionalities of individual agents and workflow: <br />
 ·	Web Portal to raise an application for SIN generation. <br />
 ·	A user who can login to the SIN generator portal - web portal using Email id and Date of Birth and password. <br />
 ·	Once the user enters the required information on the screen, this request being transferred to the backend to create a JWT (Json Web Token) token using authorization agent <br />
@@ -22,7 +22,7 @@ The scope of this project is to create a web application for immigrants and citi
 ·	After successful insert/update, SIN pdf is displayed on the screen and the user can download the pdf from the portal. <br />
 
 
-# What We Will Be Using: <br />
+## What We Will Be Using: <br />
 ·	Python 3.7 <br />
 ·	Tkinter (For GUI) <br />
 ·	Spade (Multi Agent System Framework) <br />
