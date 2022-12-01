@@ -58,7 +58,7 @@ def RetrieveDatabase(firstName, lastName):
     try:
         myClient = MongoClient("mongodb://localhost:27017/")
         mydb = myClient["SIN_DATABASE"]
-        mycol = mydb['userLoginDetails']
+        mycol = mydb['userDetails']
         for data in mycol.find({"firstName": firstName, "lastName": lastName}, {"SIN": 1}):
             print(data)
             return data
@@ -67,17 +67,21 @@ def RetrieveDatabase(firstName, lastName):
         print("FAILED")
     return ""
 
-def UpdateDatabase(modifyData):
+def InsertSINData(userData):
     try:
         myClient = MongoClient("mongodb://localhost:27017/")
         mydb = myClient["SIN_DATABASE"]
-        mycol = mydb['userLoginDetails']
-        myQuery = {"firstName" : "gg"}
-        my
-        mycol.update_one()
+        mycol = mydb['sinData']
+
+        dbData = []
+        dbData.append(userData)
+        mycol.insert_many(dbData)
+        return "success"
+
+
     except Exception:
         print("FAILED")
-    return ""
+    return "failure"
 
 class application(tk.Tk):
     def __init__(self, *args, **Kwargs):

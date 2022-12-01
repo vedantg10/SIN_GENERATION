@@ -49,7 +49,7 @@ class VerificationAgentClass(Agent):
 
 
                     #Logic to check if SIN data exists for the user or not
-                    if(sinData == "" and len(sinData) <= 9):
+                    if(sinData == "" and len(sinData) < 9):
                         msg.body = "No SIN exists"
                     else:
                         msg.body = "SIN exists"

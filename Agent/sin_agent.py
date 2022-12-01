@@ -35,7 +35,7 @@ class SinGeneratorAgentClass(Agent):
 
                 commandID = ReceivedMessage[2]
                 ReceivedMessage = ReceivedMessage.split(":")
-                msg = Message(to=AgentCommunication.userAgentID)  # Instantiate the message
+                msg = Message(to=AgentCommunication.userAgentUserID)  # Instantiate the message
                 msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
 
                 if commandID == AgentCommunication.UserCreateSinCommandId:
@@ -48,13 +48,9 @@ class SinGeneratorAgentClass(Agent):
                     userData = {
                         "firstName": ReceivedMessage[1],
                         "lastName": ReceivedMessage[2],
-                        "passportNumber": ReceivedMessage[3],
-                        "dateOfBirth": ReceivedMessage[4],
-                        "permitNumber": ReceivedMessage[5],
-                        "permitExpiry": ReceivedMessage[6],
                         "SIN": generatedSIN
                     }
-                    application.UpdateDatabase(userData)
+                    application.InsertSINData(userData)
 
                     print("mainsin",generatedSIN)
 
@@ -69,7 +65,8 @@ class SinGeneratorAgentClass(Agent):
                     ErrorCode = AgentCommunication.SuccessAckID
 
                     # Sending response to user agent with the generated SIN number
-                    msg.body = "SIN generated"
+                    msg.body = str(generatedSIN)
+
 
                 print("SinGeneratorClass:SinGeneratorBehaviour:run:msg:response:{sin number sent Sent}")
                 await self.send(msg)

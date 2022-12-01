@@ -7,6 +7,7 @@ from Agent.user_agent import AgentCommunication
 import tkinter as tk
 from tkcalendar import DateEntry
 from tkinter import *
+
 userName = ""
 password = ""
 firstName = ""
@@ -281,12 +282,30 @@ class loginPage(loginPageFrame):
                 # sin agent call to create a sin number
                 # time.sleep(10)
                     if (dataBaseResp == "success"):
-                        user_agent.RequestData(AgentCommunication.userAgentID, AgentCommunication.sinAgentId,
+                        userData = ":" + firstName + ":" + lastName
+                        sinData = user_agent.RequestData(AgentCommunication.userAgentID, AgentCommunication.sinAgentId,
                                                           AgentCommunication.UserCreateSinCommandId
                                                           , AgentCommunication.SuccessAckID, userData)
+                    print("hg",sinData)
+                    if(not (sinData == "" and len(sinData) < 9)):
+                        print("hic")
+                        manSin = sinData
+                        final_w = tk.Tk()
+                        final_w.geometry(
+                            "{0}x{1}+0+0".format(final_w.winfo_screenwidth(), final_w.winfo_screenheight()))
+                        final_w.configure(background="#ADD8E6")
+                        final_w.title("SIN Number")
+                        Label(final_w,
+                              text="Your SIN is : " + manSin, width=45, bg="#fff7c6", fg="black",
+                              font=("bold", 32)).place(x=90, y=43)
+                        final_w.mainloop()
+
+                        
 
                 else:
                     tkinter.messagebox.showerror(title="Error", message="Wrong Username or Password")
+
+
 
             self.Button7 = tk.Button(self)
             self.Button7.place(relx=0.040, rely=0.65, height=45, width=200)
