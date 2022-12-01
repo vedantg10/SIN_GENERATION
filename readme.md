@@ -2,7 +2,7 @@
 Online Social Insurance Number (SIN) generation system.
  
 # Requirements:
-There are 5 actors - agents that are required in the project as given below:_
+There are 5 actors - agents that are required in the project as given below: <br />
 ·	User Agent
 ·	Verification Agent
 ·	Authorization Agent
