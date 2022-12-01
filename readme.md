@@ -3,11 +3,11 @@ Online Social Insurance Number (SIN) generation system.
  
 # Requirements:
 There are 5 actors - agents that are required in the project as given below: <br />
-·	User Agent
-·	Verification Agent
-·	Authorization Agent
-·	Database Agent
-·	SIN Generator Agent
+·	User Agent <br />
+·	Verification Agent <br />
+·	Authorization Agent <br />
+·	Database Agent <br />
+·	SIN Generator Agent <br />
 
 # Scope:
 The scope of this project is to create a web application for immigrants and citizens to generate their Social Insurance Number (SIN) online instead of physically going to Service Canada. Any person with valid documents can do the SIN generation process online within Canada.
