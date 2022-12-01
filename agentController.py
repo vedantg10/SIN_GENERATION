@@ -1,3 +1,4 @@
+
 class ApplicationData:
     userName = ""
     password = ""
@@ -8,13 +9,11 @@ class ApplicationData:
     permitNumber = ""
     permitExpiry = ""
 
-
 class AgentCommunication:
     CommunicationTxBuffer = ""
     CommunicationRxBuffer = ""
     CommunicationFlag = False
     CommunicationError = False
-
     userAgentUserID = "agent1@jabbim.com"
     userAgentPassword = "agent@123"
     jwtAgentUserId = "agent2@jabbim.com"
@@ -27,15 +26,10 @@ class AgentCommunication:
     databaseAgentPasswordId = "agent@123"
 
     # Command IDs
-    UserDataCommandID = "1"
-    ReportDataCommandID = "8"
-    UserDataUpdateCommandID = "5"
-    UserDataAddCommandID = "6"
-    UserDataDeleteCommandID = "7"
     UserCreateJwtCommandId = "2"
     UserCreateVerificationCommandId = "3"
     UserCreateDatabaseCommandId = "4"
-    UserCreateSinCommandId ="5"
+    UserCreateSinCommandId = "5"
 
     # Agent IDs
     userAgentID = "1"
@@ -46,20 +40,9 @@ class AgentCommunication:
 
     # Error Codes
     SuccessAckID = "0"
-    DataNotFoundAckID = "1"
-    DatabaseConnectionFailureAckID = "2"
-    DataUpdateFailedAckID = "3"
-    DataAddFailedAckID = "4"
-    DataDeleteFailedAckID = "5"
 
     # Protocol Format
-    SenderAgentIDIndex = 0
     ReceiverAgentIDIndex = 1
-    CommandIDIndex = 2
-    ErrorCodeIndex = 3
-    # index reserved for :
-    DataIndex = 5
-
 
 class DatabaseAgentData:
     encoded_jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdXNlci5jb20iLCJwYXNzd29yZCI6InNvbWVTYWx0VmFsdWV0ZXN0In0.JyFt5w5AdBIH0CabY_b71ThqZsj_SDfG--8YUB04QW0"
@@ -70,7 +53,6 @@ class JWT:
 
     # jwt secret
     secret = "someSecretValue"
-
 
 from Agent import jwt_agent
 from Agent import sin_agent

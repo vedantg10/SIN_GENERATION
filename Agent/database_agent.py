@@ -3,15 +3,7 @@ from spade.behaviour import CyclicBehaviour
 from spade.message import Message
 from spade.template import Template
 from agentController import AgentCommunication
-from agentController import ApplicationData
-from agentController import JWT
-from agentController import DatabaseAgentData
 from application import SaveDatabase
-
-
-# from ReportGeneration.Encoder_Decoder import encode_file_to_str
-# from ReportGeneration import ReportGeneration
-
 
 class DatabaseAgentClass(Agent):
     class DatabaseAgentBehaviour(CyclicBehaviour):
@@ -35,7 +27,6 @@ class DatabaseAgentClass(Agent):
                 msg = Message(to=AgentCommunication.userAgentUserID)  # Instantiate the message
                 msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
 
-
                 if commandID == AgentCommunication.UserCreateDatabaseCommandId:
                     userData = {
                         "firstName": ReceivedMessage[1],
@@ -46,14 +37,13 @@ class DatabaseAgentClass(Agent):
                         "permitExpiry": ReceivedMessage[6],
                         "SIN": ""
                     }
-                    '''Execute Find User Data Query'''
+                    '''Execute Save Data Query'''
                     Response = SaveDatabase(userData)
                     # Send response to Webportal agent
                     msg.body = Response
 
                 print("DatabaseAdminAgentClass:DatabaseAdminAgentBehaviour:run:msg:response:\"{}\"".format(msg.body))
                 await self.send(msg)
-
 
     async def setup(self):
         print("DatabaseAgent:setup")

@@ -4,17 +4,8 @@ from spade.message import Message
 from spade.template import Template
 from agentController import AgentCommunication
 from agentController import ApplicationData
-from agentController import JWT
-from agentController import DatabaseAgentData
-
 import random
 import application
-
-
-
-# from ReportGeneration.Encoder_Decoder import encode_file_to_str
-# from ReportGeneration import ReportGeneration
-
 
 class SinGeneratorAgentClass(Agent):
     class SinGeneratorBehaviour(CyclicBehaviour):
@@ -54,19 +45,8 @@ class SinGeneratorAgentClass(Agent):
 
                     print("mainsin",generatedSIN)
 
-
-                    # Database call to save generated SIN against the user
-
-                    # ReportGeneration.GenerateReport(ApplicationData.Name, ApplicationData.HCNo, ApplicationData.DOB,
-                    #                                 ApplicationData.Dose1Type, ApplicationData.Dose1Date, ApplicationData.Dose1Address,
-                    #                                 ApplicationData.Dose2Type, ApplicationData.Dose2Date, ApplicationData.Dose2Address)
-                    #
-                    # file_str = encode_file_to_str("CovidReport.pdf")
-                    ErrorCode = AgentCommunication.SuccessAckID
-
                     # Sending response to user agent with the generated SIN number
                     msg.body = str(generatedSIN)
-
 
                 print("SinGeneratorClass:SinGeneratorBehaviour:run:msg:response:{sin number sent Sent}")
                 await self.send(msg)

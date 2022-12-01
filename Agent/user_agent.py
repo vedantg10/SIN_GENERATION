@@ -1,11 +1,6 @@
-import time
-import asyncio
 from spade.agent import Agent
-from spade.behaviour import OneShotBehaviour
 from spade.behaviour import CyclicBehaviour
 from spade.message import Message
-from spade.template import Template
-
 
 class AgentCommunication:
 
@@ -33,31 +28,16 @@ class AgentCommunication:
     sinAgentId = "5"
 
     #Command IDs
-    UserDataCommandId = "1"
     UserCreateJwtCommandId = "2"
     UserCreateVerificationCommandId = "3"
     UserCreateDatabaseCommandId = "4"
     UserCreateSinCommandId = "5"
 
-    # Error Codes
+    # Error Code
     SuccessAckID = "0"
-    DataNotFoundAckID = "1"
-    DatabaseConnectionFailureAckID = "2"
-    DataUpdateFailedAckID = "3"
-    DataAddFailedAckID = "4"
-    DataDeleteFailedAckID = "5"
-
 
     # Protocol Format
-    SenderAgentIDIndex = 0
     ReceiverAgentIDIndex = 1
-    CommandIDIndex = 2
-    ErrorCodeIndex = 3
-    # index reserved for :
-    DataIndex = 5
-
-
-
 
 class UserAgentClass(Agent):
     class UserAgentBehaviour(CyclicBehaviour):
@@ -65,7 +45,6 @@ class UserAgentClass(Agent):
             print("Class:{\"UserAgentClass.UserAgentBehaviour\"}, Method:{\"on_start\"}")
 
         async def run(self):
-            # print("SenderAgent:UserAgentBehaviour:run")
             if AgentCommunication.CommunicationFlag:
                 print(AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex])
                 if AgentCommunication.CommunicationTxBuffer[AgentCommunication.ReceiverAgentIDIndex] == AgentCommunication.userAgentID:
@@ -89,7 +68,7 @@ class UserAgentClass(Agent):
                 # Set the message content
                 msg.body = AgentCommunication.CommunicationTxBuffer
 
-                  # Send Message
+                # Send Message
                 await self.send(msg)
                 print("userAgentClass:userAgentBehaviour:run:msg:request:\"{}\"".format(msg.body))
 
@@ -98,7 +77,6 @@ class UserAgentClass(Agent):
                 print (msg)
 
                 if msg:
-                    # Copy Received to Communication RX Buffer
                     AgentCommunication.CommunicationRxBuffer = msg.body
                     print("UserAgentClass:UserAgentBehaviour:run:msg:response:\"{}\"".format(msg.body))
                     AgentCommunication.CommunicationError = False
@@ -109,27 +87,19 @@ class UserAgentClass(Agent):
                     AgentCommunication.CommunicationError = True
                     print("userAgentClass:userAgentBehaviour:run:msg:response:\"No Response\"")
 
-            # else:
-                # No Messages to be sent
-            #await asyncio.sleep(2)
-
     async def setup(self):
         print("userAgentClass:setup")
         b = self.UserAgentBehaviour()
         self.add_behaviour(b)
 
 def RequestData(SenderAgentID, ReceiverAgentID, CommandID, ErrorCode, Data):
-    # print("fghjkl;")
-
     AgentCommunication.CommunicationTxBuffer = SenderAgentID + ReceiverAgentID + CommandID + ErrorCode + Data
     AgentCommunication.CommunicationFlag = True
     while AgentCommunication.CommunicationFlag:
         pass
-
     # if Slave Agent is not responding
     if AgentCommunication.CommunicationError:
         AgentCommunication.CommunicationRxBuffer = ""
-
     return AgentCommunication.CommunicationRxBuffer
 
 def userAgentStart():

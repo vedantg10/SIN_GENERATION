@@ -3,14 +3,7 @@ from spade.behaviour import CyclicBehaviour
 from spade.message import Message
 from spade.template import Template
 from agentController import AgentCommunication
-from agentController import ApplicationData
-from agentController import JWT
-from agentController import DatabaseAgentData
 import application
-
-import jwt
-# from ReportGeneration.Encoder_Decoder import encode_file_to_str
-# from ReportGeneration import ReportGeneration
 
 
 class VerificationAgentClass(Agent):
@@ -39,37 +32,18 @@ class VerificationAgentClass(Agent):
                     'Get Data from Message body'
                     firstName = ReceivedMessage[1]
                     lastName = ReceivedMessage[2]
-
                     sinData = application.RetrieveDatabase(firstName, lastName)
-
-
-
-                    #Get data for the user from the cloud database
-                    # sinData = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdXNlci5jb20iLCJwYXNzd29yZCI6InNvbWVTYWx0VmFsdWV0ZXN0In0.JyFt5w5AdBIH0CabY_b71ThqZsj_SDfG-"
-
 
                     #Logic to check if SIN data exists for the user or not
                     if(sinData == "" and len(sinData) < 9):
                         msg.body = "No SIN exists"
                     else:
                         msg.body = "SIN exists"
-
-
-
-
-                    # ReportGeneration.GenerateReport(ApplicationData.Name, ApplicationData.HCNo, ApplicationData.DOB,
-                    #                                 ApplicationData.Dose1Type, ApplicationData.Dose1Date, ApplicationData.Dose1Address,
-                    #                                 ApplicationData.Dose2Type, ApplicationData.Dose2Date, ApplicationData.Dose2Address)
-                    #
-                    # file_str = encode_file_to_str("CovidReport.pdf")
-                    ErrorCode = AgentCommunication.SuccessAckID
-
+                    # ErrorCode = AgentCommunication.SuccessAckID
                 print("UserAgentClass:UserAgentBehaviour:run:msg:response:{message Sent}")
-
                 #send message to user agent
                 print("hi",msg.body)
                 await self.send(msg)
-
 
     async def setup(self):
         print("VerficationAgent:setup")
