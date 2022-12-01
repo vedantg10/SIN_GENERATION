@@ -6,6 +6,7 @@ from agentController import AgentCommunication
 from agentController import ApplicationData
 from agentController import JWT
 from agentController import DatabaseAgentData
+import application
 
 import jwt
 # from ReportGeneration.Encoder_Decoder import encode_file_to_str
@@ -31,15 +32,20 @@ class VerificationAgentClass(Agent):
 
                 commandID = ReceivedMessage[2]
                 ReceivedMessage = ReceivedMessage.split(":")
-                msg = Message(to=AgentCommunication.userAgentID)  # Instantiate the message
+                msg = Message(to=AgentCommunication.userAgentUserID)  # Instantiate the message
                 msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
 
                 if commandID == AgentCommunication.UserCreateVerificationCommandId:
                     'Get Data from Message body'
-                    ApplicationData.email = ReceivedMessage[1]
+                    firstName = ReceivedMessage[1]
+                    lastName = ReceivedMessage[2]
+
+                    sinData = application.RetrieveDatabase(firstName, lastName)
+
+
 
                     #Get data for the user from the cloud database
-                    sinData = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdXNlci5jb20iLCJwYXNzd29yZCI6InNvbWVTYWx0VmFsdWV0ZXN0In0.JyFt5w5AdBIH0CabY_b71ThqZsj_SDfG-"
+                    # sinData = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdXNlci5jb20iLCJwYXNzd29yZCI6InNvbWVTYWx0VmFsdWV0ZXN0In0.JyFt5w5AdBIH0CabY_b71ThqZsj_SDfG-"
 
 
                     #Logic to check if SIN data exists for the user or not
@@ -61,6 +67,7 @@ class VerificationAgentClass(Agent):
                 print("UserAgentClass:UserAgentBehaviour:run:msg:response:{message Sent}")
 
                 #send message to user agent
+                print("hi",msg.body)
                 await self.send(msg)
 
 

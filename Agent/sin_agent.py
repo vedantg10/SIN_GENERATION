@@ -8,7 +8,7 @@ from agentController import JWT
 from agentController import DatabaseAgentData
 
 import random
-
+import application
 
 
 
@@ -30,7 +30,7 @@ class SinGeneratorAgentClass(Agent):
                 print("i am message from sin generator agent", ReceivedMessage)
 
                 ''' Check Agent Receiver ID'''
-                if not ReceivedMessage[1] == AgentCommunication.UserAgentID:
+                if not ReceivedMessage[0] == AgentCommunication.userAgentID:
                     return
 
                 commandID = ReceivedMessage[2]
@@ -38,14 +38,26 @@ class SinGeneratorAgentClass(Agent):
                 msg = Message(to=AgentCommunication.userAgentID)  # Instantiate the message
                 msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
 
-                if commandID == AgentCommunication.GenerateReportCommandID:
+                if commandID == AgentCommunication.UserCreateSinCommandId:
                     'Get Data from Message body'
                     ApplicationData.email = ReceivedMessage[1]
                     ApplicationData.passport = ReceivedMessage[2]
 
                     generatedSIN = random.randrange(100000000, 999999999)
 
-                    print(generatedSIN)
+                    userData = {
+                        "firstName": ReceivedMessage[1],
+                        "lastName": ReceivedMessage[2],
+                        "passportNumber": ReceivedMessage[3],
+                        "dateOfBirth": ReceivedMessage[4],
+                        "permitNumber": ReceivedMessage[5],
+                        "permitExpiry": ReceivedMessage[6],
+                        "SIN": generatedSIN
+                    }
+                    application.UpdateDatabase(userData)
+
+                    print("mainsin",generatedSIN)
+
 
                     # Database call to save generated SIN against the user
 

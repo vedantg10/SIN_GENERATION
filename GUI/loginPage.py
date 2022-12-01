@@ -1,10 +1,20 @@
 import tkinter as tk
 import tkinter.messagebox
 from Agent import user_agent
+import time
+from agentController import ApplicationData
 from Agent.user_agent import AgentCommunication
 import tkinter as tk
 from tkcalendar import DateEntry
 from tkinter import *
+userName = ""
+password = ""
+firstName = ""
+lastName = ""
+passportNumber = ""
+dateOfBirth = ""
+permitNumber = ""
+permitExpiry = ""
 
 # self = tk.Tk()
 import re
@@ -61,18 +71,15 @@ class loginPage(loginPageFrame):
                 self.Message1.configure(borderwidth="5")
                 self.Message1.configure(cursor="fleur")
                 self.Message1.configure(font="-family {Segoe UI} -size 34 -weight bold -underline 1")
-                self.Message1.configure(justify='center')
+                self.Message1.configure (justify='center')
                 self.Message1.configure(relief="groove")
                 self.Message1.configure(text='''SIN Registration Form''')
                 self.Message1.configure(width=1300)
 
-                def Submit():
-                    print(self.Entry6.get())
-                    print(self.Entry5.get())
-                    print(self.Entry4.get())
-                    print(self.Entry3.get())
-                    print(self.Entry2.get())
-                    print(self.Entry1.get())
+
+
+
+
 
                 # First Name Entry Button
                 self.Button1 = tk.Button(self)
@@ -215,17 +222,11 @@ class loginPage(loginPageFrame):
                 self.Entry6.configure(textvariable="study_permit_expiry")
 
                 # Login Button
-                self.Button7 = tk.Button(self)
-                self.Button7.place(relx=0.040, rely=0.65, height=45, width=200)
-                self.Button7.configure(background="#1eee52")
-                self.Button7.configure(borderwidth="3")
-                self.Button7.configure(command=Submit)
-                self.Button7.configure(cursor="hand2")
-                self.Button7.configure(font="-family {Segoe UI} -size 15 -weight bold")
-                self.Button7.configure(highlightcolor="black")
-                self.Button7.configure(text="Submit")
 
-                self.mainloop()  # Keep the window open
+
+                # self.mainloop()  # Keep the window open
+
+
 
             # elif((application.Username == application.User2_Username) and (application.Password == application.User2_Password)):
             #     # Curr_Frame = AHSAdminPage.AHSAdminPage
@@ -237,23 +238,65 @@ class loginPage(loginPageFrame):
             #     # controller.show_frame(Curr_Frame)
 
             # Call here to verification agent to check data
-            print(ReceivedData,"Data from jwt_agent")
-            if(ReceivedData):
-                if(ReceivedData == "user authenticated"):
+            def Submit():
+                global firstName
+                global lastName
+                global passportNumber
+                global dateOfBirth
+                global permitNumber
+                global permitExpiry
+                firstName = self.Entry1.get()
+                lastName = self.Entry2.get()
+                passportNumber = self.Entry3.get()
+                dateOfBirth = self.Entry4.get()
+                permitNumber = self.Entry5.get()
+                permitExpiry = self.Entry6.get()
+                print("First Name:" + firstName)
+                print("Last Name:" + lastName)
+                print("Passport Number:" + passportNumber)
+                print("Date of Birth:" + dateOfBirth)
+                print("Study Permit Number:" + permitNumber)
+                print("Study Permit Expiry:" + permitExpiry)
+
+                print(ReceivedData,"Data from jwt_agent")
+                print("ffirst",firstName)
+                CommData = ":" + firstName + ":" + lastName
+
+                if(ReceivedData and ReceivedData == "user authenticated"):
                     VerificationData = user_agent.RequestData(AgentCommunication.userAgentID, AgentCommunication.verificationAgentID,
-                                                      AgentCommunication.UserCreateVerificationCommandId
-                                                      , AgentCommunication.SuccessAckID, CommData)
-            # Database agent used to create a new account
-            dataBaseResp = True
+                                                          AgentCommunication.UserCreateVerificationCommandId
+                                                          , AgentCommunication.SuccessAckID, CommData)
+                    print("dsd", VerificationData)
+                # Database agent used to create a new account
+                    if(VerificationData == "No SIN exists"):
+                        print("noooo",firstName)
 
-            # sin agent call to create a sin number
-            if(dataBaseResp):
-                user_agent.RequestData(AgentCommunication.userAgentID, AgentCommunication.sinAgentId,
-                                                      AgentCommunication.UserCreateSinCommandId
-                                                      , AgentCommunication.SuccessAckID, CommData)
 
-            else:
-                tkinter.messagebox.showerror(title="Error", message="Wrong Username or Password")
+                        userData = ":" + firstName + ":" + lastName + ":" + passportNumber + ":" + dateOfBirth + ":" + permitNumber + ":" + permitExpiry
+                        dataBaseResp = user_agent.RequestData(AgentCommunication.userAgentID, AgentCommunication.databaseAgentID,
+                                                              AgentCommunication.UserCreateDatabaseCommandId
+                                                              , AgentCommunication.SuccessAckID, userData)
+
+
+                # sin agent call to create a sin number
+                # time.sleep(10)
+                    if (dataBaseResp == "success"):
+                        user_agent.RequestData(AgentCommunication.userAgentID, AgentCommunication.sinAgentId,
+                                                          AgentCommunication.UserCreateSinCommandId
+                                                          , AgentCommunication.SuccessAckID, userData)
+
+                else:
+                    tkinter.messagebox.showerror(title="Error", message="Wrong Username or Password")
+
+            self.Button7 = tk.Button(self)
+            self.Button7.place(relx=0.040, rely=0.65, height=45, width=200)
+            self.Button7.configure(background="#1eee52")
+            self.Button7.configure(borderwidth="3")
+            self.Button7.configure(command=Submit)
+            self.Button7.configure(cursor="hand2")
+            self.Button7.configure(font="-family {Segoe UI} -size 15 -weight bold")
+            self.Button7.configure(highlightcolor="black")
+            self.Button7.configure(text="Submit")
 
     def UpdateEntryData(self):
         application.userName = self.Entry1.get()

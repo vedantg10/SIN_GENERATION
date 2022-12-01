@@ -1,6 +1,12 @@
 class ApplicationData:
     userName = ""
     password = ""
+    firstName = ""
+    lastName = ""
+    passportNumber = ""
+    dateOfBirth = ""
+    permitNumber = ""
+    permitExpiry = ""
 
 
 class AgentCommunication:
@@ -20,20 +26,23 @@ class AgentCommunication:
     databaseAgentUserId = "agent5@jabbim.com"
     databaseAgentPasswordId = "agent@123"
 
+    # Command IDs
     UserDataCommandID = "1"
-    ReportDataCommandID = "6"
-    UserDataUpdateCommandID = "3"
-    UserDataAddCommandID = "4"
-    UserDataDeleteCommandID = "5"
+    ReportDataCommandID = "8"
+    UserDataUpdateCommandID = "5"
+    UserDataAddCommandID = "6"
+    UserDataDeleteCommandID = "7"
     UserCreateJwtCommandId = "2"
     UserCreateVerificationCommandId = "3"
+    UserCreateDatabaseCommandId = "4"
+    UserCreateSinCommandId ="5"
 
     # Agent IDs
     userAgentID = "1"
     jwtAgentID = "2"
-    sinAgentId = "3"
-    c = "4"
-    databaseAgentId = "5"
+    verificationAgentID = "3"
+    databaseAgentID = "4"
+    sinAgentId = "5"
 
     # Error Codes
     SuccessAckID = "0"
@@ -66,11 +75,11 @@ class JWT:
 from Agent import jwt_agent
 from Agent import sin_agent
 from Agent import verification_agent
-#from Agent import database_agent
+from Agent import database_agent
 
 
 def StartAgents():
     jwt_agent.JwtAgentStart()
     sin_agent.SinGeneratorAgentStart()
     verification_agent.VerificationAgentStart()
-    # database_agent.DatabaseAgentStart()
+    database_agent.DatabaseAgentStart()

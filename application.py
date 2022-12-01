@@ -12,9 +12,18 @@ from GUI.loginPage import loginPage
 # loginDATA
 Curr_Frame = loginPage
 
-# AdminCredentials
-userName = "test@user.com"
-password = "test"
+# Application Data
+# userName = ""
+# password = ""
+# firstName = ""
+# lastName = ""
+# passportNumber = ""
+# dateOfBirth = ""
+# permitNumber = ""
+# permitExpiry = ""
+
+# Application Data
+
 
 # userCredentials
 user1_userName = "test@user.com"
@@ -27,16 +36,48 @@ user3_userName = "test_2@user.com"
 user3_password = "test2"
 
 
-def connectDatabase():
+def SaveDatabase(userData):
+    try:
+        dbData = []
+        print("user", userData)
+        myClient = MongoClient("mongodb://localhost:27017/")
+        mydb = myClient["SIN_DATABASE"]
+        mycol = mydb['userDetails']
+        data = mycol.find()
+        print("data",data)
+        dbData.append(userData)
+        mycol.insert_many(dbData)
+        return "success"
+
+
+    except Exception:
+        print("FAILED")
+        return "failure"
+
+def RetrieveDatabase(firstName, lastName):
     try:
         myClient = MongoClient("mongodb://localhost:27017/")
         mydb = myClient["SIN_DATABASE"]
         mycol = mydb['userLoginDetails']
-        for data in mycol.find():
+        for data in mycol.find({"firstName": firstName, "lastName": lastName}, {"SIN": 1}):
             print(data)
-    except Exception:
-        print("FAIELD")
+            return data
 
+    except Exception:
+        print("FAILED")
+    return ""
+
+def UpdateDatabase(modifyData):
+    try:
+        myClient = MongoClient("mongodb://localhost:27017/")
+        mydb = myClient["SIN_DATABASE"]
+        mycol = mydb['userLoginDetails']
+        myQuery = {"firstName" : "gg"}
+        my
+        mycol.update_one()
+    except Exception:
+        print("FAILED")
+    return ""
 
 class application(tk.Tk):
     def __init__(self, *args, **Kwargs):

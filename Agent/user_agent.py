@@ -91,7 +91,7 @@ class UserAgentClass(Agent):
 
                   # Send Message
                 await self.send(msg)
-                print("fghfghguserAgentClass:userAgentBehaviour:run:msg:request:\"{}\"".format(msg.body))
+                print("userAgentClass:userAgentBehaviour:run:msg:request:\"{}\"".format(msg.body))
 
                 # wait for a message for 5 seconds
                 msg = await self.receive(timeout=5)
@@ -119,7 +119,7 @@ class UserAgentClass(Agent):
         self.add_behaviour(b)
 
 def RequestData(SenderAgentID, ReceiverAgentID, CommandID, ErrorCode, Data):
-    print("fghjkl;")
+    # print("fghjkl;")
 
     AgentCommunication.CommunicationTxBuffer = SenderAgentID + ReceiverAgentID + CommandID + ErrorCode + Data
     AgentCommunication.CommunicationFlag = True
