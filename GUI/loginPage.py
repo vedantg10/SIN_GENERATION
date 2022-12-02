@@ -1,33 +1,31 @@
-import tkinter as tk
 import tkinter.messagebox
 from Agent import user_agent
 from Agent.user_agent import AgentCommunication
 import tkinter as tk
 from tkcalendar import DateEntry
 from tkinter import *
-
-# self = tk.Tk()
-import re
-# from PIL import ImageTk, Image
-
-
 from GUI import loginPage
-#from GUI.userPage import SinPage
 import application
+
+# Form Variables
+userName = ""
+password = ""
+firstName = ""
+lastName = ""
+passportNumber = ""
+dateOfBirth = ""
+permitNumber = ""
+permitExpiry = ""
 
 loginPageFrame = tk.Frame
 
-
 class loginPage(loginPageFrame):
-
     # Callbacks Here
     def Button1_Callback(self, controller):
         print('LoginPage Button 1 Pressed')
-        # controller.show_frame(TestPage1.PageOne)
 
     def Button2_Callback(self, controller):
         print('LoginPage Button 2 Pressed')
-        # controller.show_frame(TestPage1.PageOne)
 
     def Button3_Callback(self, controller):
         print('LoginPage Button 3 Pressed')
@@ -40,11 +38,13 @@ class loginPage(loginPageFrame):
             if ((application.userName == application.user1_userName) and (
                     application.password == application.user1_password)):
                 CommData = ":" + application.userName + ":" + application.password
+
+                print("Calling JWT agent with data: ", CommData)
                 ReceivedData = user_agent.RequestData(AgentCommunication.userAgentID, AgentCommunication.jwtAgentID,
                                                       AgentCommunication.UserCreateJwtCommandId
                                                       , AgentCommunication.SuccessAckID, CommData)
-                #Curr_Frame = SinPage
-                #controller.show_frame(Curr_Frame)
+                print("Response from JWT agent: ", ReceivedData)
+
                 self = tk.Tk()
                 self.geometry("1536x801+-8+-8")
                 self.minsize(120, 1)
@@ -61,25 +61,16 @@ class loginPage(loginPageFrame):
                 self.Message1.configure(borderwidth="5")
                 self.Message1.configure(cursor="fleur")
                 self.Message1.configure(font="-family {Segoe UI} -size 34 -weight bold -underline 1")
-                self.Message1.configure(justify='center')
+                self.Message1.configure (justify='center')
                 self.Message1.configure(relief="groove")
                 self.Message1.configure(text='''SIN Registration Form''')
                 self.Message1.configure(width=1300)
-
-                def Submit():
-                    print(self.Entry6.get())
-                    print(self.Entry5.get())
-                    print(self.Entry4.get())
-                    print(self.Entry3.get())
-                    print(self.Entry2.get())
-                    print(self.Entry1.get())
 
                 # First Name Entry Button
                 self.Button1 = tk.Button(self)
                 self.Button1.place(relx=0.025, rely=0.21, height=27, width=150)
                 self.Button1.configure(background="#f1ed43")
                 self.Button1.configure(borderwidth="3")
-                # self.Button1.configure(command=first_name_button)
                 self.Button1.configure(cursor="hand2")
                 self.Button1.configure(font="-family {Segoe UI} -size 15 -weight bold")
                 self.Button1.configure(highlightcolor="black")
@@ -102,7 +93,6 @@ class loginPage(loginPageFrame):
                 self.Button2.place(relx=0.025, rely=0.25, height=30, width=150)
                 self.Button2.configure(background="#f1ed43")
                 self.Button2.configure(borderwidth="3")
-                # self.Button2.configure(command=last_name_button)
                 self.Button2.configure(cursor="hand2")
                 self.Button2.configure(font="-family {Segoe UI} -size 15 -weight bold")
                 self.Button2.configure(highlightcolor="black")
@@ -125,7 +115,6 @@ class loginPage(loginPageFrame):
                 self.Button3.place(relx=0.025, rely=0.30, height=30, width=200)
                 self.Button3.configure(background="#f1ed43")
                 self.Button3.configure(borderwidth="3")
-                # self.Button3.configure(command=passport_number_button)
                 self.Button3.configure(cursor="hand2")
                 self.Button3.configure(font="-family {Segoe UI} -size 15 -weight bold")
                 self.Button3.configure(highlightcolor="black")
@@ -148,14 +137,12 @@ class loginPage(loginPageFrame):
                 self.Button4.place(relx=0.025, rely=0.35, height=30, width=200)
                 self.Button4.configure(background="#f1ed43")
                 self.Button4.configure(borderwidth="3")
-                # self.Button4.configure(command=date_of_birth_button)
                 self.Button4.configure(cursor="hand2")
                 self.Button4.configure(font="-family {Segoe UI} -size 15 -weight bold")
                 self.Button4.configure(highlightcolor="black")
                 self.Button4.configure(text="Date of Birth")
 
                 # DoB Entry
-                # date_of_birth = (DateEntry(self,selectmode='day') )
                 self.Entry4 = DateEntry(self, selectmode='day')
                 self.Entry4.place(relx=0.2, rely=0.35, height=30, relwidth=0.2)
                 self.Entry4.configure(background="#ecd1ca")
@@ -164,7 +151,6 @@ class loginPage(loginPageFrame):
                 self.Entry4.configure(disabledforeground="#a3a3a3")
                 self.Entry4.configure(font="-family {Courier New} -size 15")
                 self.Entry4.configure(foreground="#000000")
-                # self.Entry4.configure(insertbackground="black")
                 self.Entry4.configure(textvariable="date_of_birth")
 
                 # Study Permit Number Entry Button
@@ -172,7 +158,6 @@ class loginPage(loginPageFrame):
                 self.Button5.place(relx=0.025, rely=0.40, height=30, width=225)
                 self.Button5.configure(background="#f1ed43")
                 self.Button5.configure(borderwidth="3")
-                # self.Button5.configure(command=study_permit_number_button)
                 self.Button5.configure(cursor="hand2")
                 self.Button5.configure(font="-family {Segoe UI} -size 15 -weight bold")
                 self.Button5.configure(highlightcolor="black")
@@ -195,14 +180,12 @@ class loginPage(loginPageFrame):
                 self.Button6.place(relx=0.025, rely=0.45, height=30, width=200)
                 self.Button6.configure(background="#f1ed43")
                 self.Button6.configure(borderwidth="3")
-                # self.Button6.configure(command=study_permit_expiry)
                 self.Button6.configure(cursor="hand2")
                 self.Button6.configure(font="-family {Segoe UI} -size 15 -weight bold")
                 self.Button6.configure(highlightcolor="black")
                 self.Button6.configure(text="Study Permit Expiry")
 
                 # Study Permit Expiry
-                # date_of_birth = (DateEntry(self,selectmode='day') )
                 self.Entry6 = DateEntry(self, selectmode='day')
                 self.Entry6.place(relx=0.2, rely=0.45, height=30, relwidth=0.2)
                 self.Entry6.configure(background="#ecd1ca")
@@ -211,49 +194,87 @@ class loginPage(loginPageFrame):
                 self.Entry6.configure(disabledforeground="#a3a3a3")
                 self.Entry6.configure(font="-family {Courier New} -size 15")
                 self.Entry6.configure(foreground="#000000")
-                # self.Entry6.configure(insertbackground="black")
                 self.Entry6.configure(textvariable="study_permit_expiry")
 
-                # Login Button
-                self.Button7 = tk.Button(self)
-                self.Button7.place(relx=0.040, rely=0.65, height=45, width=200)
-                self.Button7.configure(background="#1eee52")
-                self.Button7.configure(borderwidth="3")
-                self.Button7.configure(command=Submit)
-                self.Button7.configure(cursor="hand2")
-                self.Button7.configure(font="-family {Segoe UI} -size 15 -weight bold")
-                self.Button7.configure(highlightcolor="black")
-                self.Button7.configure(text="Submit")
-
-                self.mainloop()  # Keep the window open
-
-            # elif((application.Username == application.User2_Username) and (application.Password == application.User2_Password)):
-            #     # Curr_Frame = AHSAdminPage.AHSAdminPage
-            #     print("AHSAdminPage Initialized")
-            #     # controller.show_frame(Curr_Frame)
-            # elif ((application.Username == application.User1_Username) and (application.Password == application.User1_Password)):
-            #     # Curr_Frame = AdminPage.AdminPage
-            #     print("AdminPage Initialized")
-            #     # controller.show_frame(Curr_Frame)
-
             # Call here to verification agent to check data
-            print(ReceivedData,"Data from jwt_agent")
-            if(ReceivedData):
-                if(ReceivedData == "user authenticated"):
+            def Submit():
+                global firstName
+                global lastName
+                global passportNumber
+                global dateOfBirth
+                global permitNumber
+                global permitExpiry
+                firstName = self.Entry1.get()
+                lastName = self.Entry2.get()
+                passportNumber = self.Entry3.get()
+                dateOfBirth = self.Entry4.get()
+                permitNumber = self.Entry5.get()
+                permitExpiry = self.Entry6.get()
+                print("First Name:" + firstName)
+                print("Last Name:" + lastName)
+                print("Passport Number:" + passportNumber)
+                print("Date of Birth:" + dateOfBirth)
+                print("Study Permit Number:" + permitNumber)
+                print("Study Permit Expiry:" + permitExpiry)
+
+                print(ReceivedData,"Data from jwt_agent")
+                CommData = ":" + firstName + ":" + lastName
+
+                if(ReceivedData and ReceivedData == "user authenticated"):
+                    print("Calling Verification agent with data: ", CommData)
+
                     VerificationData = user_agent.RequestData(AgentCommunication.userAgentID, AgentCommunication.verificationAgentID,
-                                                      AgentCommunication.UserCreateVerificationCommandId
-                                                      , AgentCommunication.SuccessAckID, CommData)
-            # Database agent used to create a new account
-            dataBaseResp = True
+                                                          AgentCommunication.UserCreateVerificationCommandId
+                                                          , AgentCommunication.SuccessAckID, CommData)
 
-            # sin agent call to create a sin number
-            if(dataBaseResp):
-                user_agent.RequestData(AgentCommunication.userAgentID, AgentCommunication.sinAgentId,
-                                                      AgentCommunication.UserCreateSinCommandId
-                                                      , AgentCommunication.SuccessAckID, CommData)
+                    print("Response from verification agent: ", VerificationData)
+                # Database agent used to create a new account
+                    if(VerificationData == "No SIN exists"):
+                        userData = ":" + firstName + ":" + lastName + ":" + passportNumber + ":" + dateOfBirth + ":" + permitNumber + ":" + permitExpiry
+                        print("Calling Database agent with data: ", userData)
+                        
+                        dataBaseResp = user_agent.RequestData(AgentCommunication.userAgentID, AgentCommunication.databaseAgentID,
+                                                              AgentCommunication.UserCreateDatabaseCommandId
+                                                              , AgentCommunication.SuccessAckID, userData)
 
-            else:
-                tkinter.messagebox.showerror(title="Error", message="Wrong Username or Password")
+                        print("Response from database agent: ", dataBaseResp)
+                    else:
+                        tkinter.messagebox.showerror(title="Error", message="SIN number already exists")
+                # sin agent call to create a sin number
+                    if (dataBaseResp == "success"):
+                        userData = ":" + firstName + ":" + lastName
+                        print("Calling SIN agent with data: ", userData)
+
+                        sinData = user_agent.RequestData(AgentCommunication.userAgentID, AgentCommunication.sinAgentId,
+                                                          AgentCommunication.UserCreateSinCommandId
+                                                          , AgentCommunication.SuccessAckID, userData)
+
+                        print("Response from SIN agent: ", sinData)
+
+                    if(not (sinData == "" and len(sinData) < 9)):
+                        manSin = sinData
+                        final_w = tk.Tk()
+                        final_w.geometry(
+                            "{0}x{1}+0+0".format(final_w.winfo_screenwidth(), final_w.winfo_screenheight()))
+                        final_w.configure(background="#ADD8E6")
+                        final_w.title("SIN Number")
+                        Label(final_w,
+                              text="Your SIN is : " + manSin, width=45, bg="#fff7c6", fg="black",
+                              font=("bold", 32)).place(x=90, y=43)
+                        final_w.mainloop()
+
+                else:
+                    tkinter.messagebox.showerror(title="Error", message="Wrong Username or Password")
+
+            self.Button7 = tk.Button(self)
+            self.Button7.place(relx=0.040, rely=0.65, height=45, width=200)
+            self.Button7.configure(background="#1eee52")
+            self.Button7.configure(borderwidth="3")
+            self.Button7.configure(command=Submit)
+            self.Button7.configure(cursor="hand2")
+            self.Button7.configure(font="-family {Segoe UI} -size 15 -weight bold")
+            self.Button7.configure(highlightcolor="black")
+            self.Button7.configure(text="Submit")
 
     def UpdateEntryData(self):
         application.userName = self.Entry1.get()
@@ -263,14 +284,6 @@ class loginPage(loginPageFrame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-
-        # Adding Image to frame
-        # BgImage = Image.open("Images\BackgroundImage.png")
-        # BgImage = Image.open("Images\Image3.jpg")
-        # BgImage = ImageTk.PhotoImage(BgImage.resize((1920, 1080), Image.ANTIALIAS))
-        # self.Label1 = tk.Label(self, image = BgImage)
-        # self.Label1.image = BgImage
-        # self.Label1.pack()
 
         # Title of the Project
         self.Message1 = tk.Message(self)

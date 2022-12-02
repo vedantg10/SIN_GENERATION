@@ -4,17 +4,8 @@ from spade.message import Message
 from spade.template import Template
 from agentController import AgentCommunication
 from agentController import ApplicationData
-from agentController import JWT
-from agentController import DatabaseAgentData
-
 import random
-
-
-
-
-# from ReportGeneration.Encoder_Decoder import encode_file_to_str
-# from ReportGeneration import ReportGeneration
-
+import application
 
 class SinGeneratorAgentClass(Agent):
     class SinGeneratorBehaviour(CyclicBehaviour):
@@ -30,34 +21,34 @@ class SinGeneratorAgentClass(Agent):
                 print("i am message from sin generator agent", ReceivedMessage)
 
                 ''' Check Agent Receiver ID'''
-                if not ReceivedMessage[0] == AgentCommunication.UserAgentID:
+                if not ReceivedMessage[0] == AgentCommunication.userAgentID:
                     return
 
                 commandID = ReceivedMessage[2]
                 ReceivedMessage = ReceivedMessage.split(":")
-                msg = Message(to=AgentCommunication.userAgentID)  # Instantiate the message
+                msg = Message(to=AgentCommunication.userAgentUserID)  # Instantiate the message
                 msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
 
-                if commandID == AgentCommunication.GenerateReportCommandID:
+                if commandID == AgentCommunication.UserCreateSinCommandId:
                     'Get Data from Message body'
                     ApplicationData.email = ReceivedMessage[1]
                     ApplicationData.passport = ReceivedMessage[2]
 
                     generatedSIN = random.randrange(100000000, 999999999)
 
-                    print(generatedSIN)
+                    userData = {
+                        "firstName": ReceivedMessage[1],
+                        "lastName": ReceivedMessage[2],
+                        "SIN": generatedSIN
+                    }
+                    dbResponse = application.InsertSINData(userData)
 
-                    # Database call to save generated SIN against the user
+                    print("Response after inserting the SIN number in the Database", dbResponse)
 
-                    # ReportGeneration.GenerateReport(ApplicationData.Name, ApplicationData.HCNo, ApplicationData.DOB,
-                    #                                 ApplicationData.Dose1Type, ApplicationData.Dose1Date, ApplicationData.Dose1Address,
-                    #                                 ApplicationData.Dose2Type, ApplicationData.Dose2Date, ApplicationData.Dose2Address)
-                    #
-                    # file_str = encode_file_to_str("CovidReport.pdf")
-                    ErrorCode = AgentCommunication.SuccessAckID
+                    print("mainsin",generatedSIN)
 
                     # Sending response to user agent with the generated SIN number
-                    msg.body = "SIN generated"
+                    msg.body = str(generatedSIN)
 
                 print("SinGeneratorClass:SinGeneratorBehaviour:run:msg:response:{sin number sent Sent}")
                 await self.send(msg)
